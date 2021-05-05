@@ -4,7 +4,9 @@ namespace App\Repository;
 
 use App\Entity\Conversations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Conversations|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,8 +21,26 @@ class ConversationsRepository extends ServiceEntityRepository
         parent::__construct($registry, Conversations::class);
     }
 
+    public function findConversationByParticipants(int $userId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->
+        select( 'c as conv','otherUser.id', 'otherUser.firstName', 'otherUser.lastName', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
+            ->innerJoin('c.participants', 'p', Join::WITH, $qb->expr()->neq('p.users', ':user'))
+            ->innerJoin('c.participants', 'me', Join::WITH, $qb->expr()->eq('me.users', ':user'))
+            ->leftJoin('c.lastMessage', 'lm')
+            ->innerJoin('me.users', 'meUser')
+            ->innerJoin('p.users', 'otherUser')
+            ->where('meUser.id = :user')
+            ->setParameter('user', $userId)
+            ->orderBy('lm.createdAt', 'DESC')
+        ;
+
+        return $qb->getQuery()->getResult();
+    }
+
     // /**
-    //  * @return Conversations[] Returns an array of Conversations objects
+    //  * @return Conversation[] Returns an array of Conversation objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +57,7 @@ class ConversationsRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?Conversations
+    public function findOneBySomeField($value): ?Conversation
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.exampleField = :val')
@@ -47,4 +67,5 @@ class ConversationsRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }
