@@ -5,7 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
-    console.log('bonjour')
+
     return (
         <HashRouter>
             <main>
