@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Right = () => {
+const Messages = () => {
     return (
         <>
 
@@ -8,4 +8,4 @@ const Right = () => {
     );
 };
 
-export default Right;
+export default Messages;
