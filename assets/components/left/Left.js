@@ -1,10 +1,11 @@
 import React from 'react';
 
-function Left(props) {
+const Left = () => {
     return (
-        <>
-        </>
+        <div>
+
+        </div>
     );
-}
+};
 
 export default Left;
