@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-function LoginPage(props) {
+const LoginPage = () => {
     return (
         <>
             <div className="layout">
@@ -39,7 +39,7 @@ function LoginPage(props) {
                                         <button type="submit" className="btn button" formAction="index-2.html">Sign In
                                         </button>
                                         <div className="callout">
-                                            <span>Don't have account? <a href="sign-up.html">Create Account</a></span>
+                                            <span>Don't have account? <Link to={'/register'}>Create Account</Link></span>
                                         </div>
                                     </form>
                                 </div>
@@ -61,6 +61,6 @@ function LoginPage(props) {
             </div>
         </>
     );
-}
+};
 
 export default LoginPage;

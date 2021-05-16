@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
-function RegisterPage(props) {
+const RegisterPage = () => {
     return (
         <>
             <div className="layout">
@@ -47,7 +47,7 @@ function RegisterPage(props) {
                                         <button type="submit" className="btn button" formAction="index-2.html">Sign Up
                                         </button>
                                         <div className="callout">
-                                            <span>Already a member? <a href="sign-in.html">Sign In</a></span>
+                                            <span>Already a member? <Link to={'/'}>Sign In</Link></span>
                                         </div>
                                     </form>
                                 </div>
@@ -69,6 +69,6 @@ function RegisterPage(props) {
             </div>
         </>
     );
-}
+};
 
 export default RegisterPage;

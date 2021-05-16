@@ -7,14 +7,14 @@ import SideBar from "../components/SideBar";
 
 const ChatPage = () => {
     return (
-        <>
-            <Left />
+        <div className="layout">
             <SideBar />
+            <Left />
             <Switch>
-                <Route path="/conversation" component={Blank} exact />
-                <Route path="/conversation/:id/:idU" component={Right} />
+                <Route path={"/conversation"} component={Blank} />
+                <Route path={"/conversation/:id/:idU"} component={Right} />
             </Switch>
-        </>
+        </div>
     );
 };
 

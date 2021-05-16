@@ -67,6 +67,76 @@ const Left = () => {
                                                     <p>How can i improve my chances of getting a deposit?</p>
                                                 </div>
                                         </a>
+                                        <a href="#list-chat" className="filterDiscussions all unread single active"
+                                           id="list-chat-list" data-toggle="list" role="tab">
+                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-1.jpg"
+                                                 data-toggle="tooltip" data-placement="top" title="Janette"
+                                                 alt="avatar" />
+                                            <div className="status">
+                                                <i className="material-icons online">fiber_manual_record</i>
+                                            </div>
+                                            <div className="new bg-yellow">
+                                                <span>+7</span>
+                                            </div>
+                                            <div className="data">
+                                                <h5>Janette Dalton</h5>
+                                                <span>Mon</span>
+                                                <p>A new feature has been updated to your account. Check it
+                                                    out...</p>
+                                            </div>
+                                        </a>
+                                        <a href="#list-empty" className="filterDiscussions all unread single"
+                                           id="list-empty-list" data-toggle="list" role="tab">
+                                            <img className="avatar-md" src="dist/img/avatars/avatar-male-1.jpg"
+                                                 data-toggle="tooltip" data-placement="top" title="Michael"
+                                                 alt="avatar" />
+                                            <div className="status">
+                                                <i className="material-icons offline">fiber_manual_record</i>
+                                            </div>
+                                            <div className="new bg-pink">
+                                                <span>+10</span>
+                                            </div>
+                                            <div className="data">
+                                                <h5>Michael Knudsen</h5>
+                                                <span>Sun</span>
+                                                <p>How can i improve my chances of getting a deposit?</p>
+                                            </div>
+                                        </a>
+                                        <a href="#list-chat" className="filterDiscussions all unread single active"
+                                           id="list-chat-list" data-toggle="list" role="tab">
+                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-1.jpg"
+                                                 data-toggle="tooltip" data-placement="top" title="Janette"
+                                                 alt="avatar" />
+                                            <div className="status">
+                                                <i className="material-icons online">fiber_manual_record</i>
+                                            </div>
+                                            <div className="new bg-yellow">
+                                                <span>+7</span>
+                                            </div>
+                                            <div className="data">
+                                                <h5>Janette Dalton</h5>
+                                                <span>Mon</span>
+                                                <p>A new feature has been updated to your account. Check it
+                                                    out...</p>
+                                            </div>
+                                        </a>
+                                        <a href="#list-empty" className="filterDiscussions all unread single"
+                                           id="list-empty-list" data-toggle="list" role="tab">
+                                            <img className="avatar-md" src="dist/img/avatars/avatar-male-1.jpg"
+                                                 data-toggle="tooltip" data-placement="top" title="Michael"
+                                                 alt="avatar" />
+                                            <div className="status">
+                                                <i className="material-icons offline">fiber_manual_record</i>
+                                            </div>
+                                            <div className="new bg-pink">
+                                                <span>+10</span>
+                                            </div>
+                                            <div className="data">
+                                                <h5>Michael Knudsen</h5>
+                                                <span>Sun</span>
+                                                <p>How can i improve my chances of getting a deposit?</p>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
