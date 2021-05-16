@@ -1,6 +1,6 @@
 import React from 'react';
 
-function SideBar(props) {
+const SideBar = () => {
     return (
         <>
             <div className="navigation">
@@ -23,7 +23,7 @@ function SideBar(props) {
                 </div>
             </div>
         </>
-);
-}
+    );
+};
 
 export default SideBar;

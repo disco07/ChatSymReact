@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import ChatPage from "./pages/ChatPage";
 
 const App = () => {
 
@@ -10,6 +11,7 @@ const App = () => {
         <HashRouter>
             <main>
                 <Switch>
+                    <Route path="/conversation" component={ChatPage} />
                     <Route path="/register" component={RegisterPage}/>
                     <Route path="/" component={LoginPage}/>
                 </Switch>
