@@ -7,7 +7,7 @@ const SideBar = () => {
                 <div className="container">
                     <div className="inside">
                         <div className="nav nav-tab menu">
-                            <button className="btn"><img className="avatar-xl" src="dist/img/avatars/avatar-male-1.jpg"
+                            <button className="btn"><img className="avatar-xl" src="../../../public/assets/dist/img/avatars/avatar-male-1.jpg"
                                                          alt="avatar" /></button>
                             <a href="#members" data-toggle="tab"><i className="material-icons">account_circle</i></a>
                             <a href="#discussions" data-toggle="tab" className="active"><i

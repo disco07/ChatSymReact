@@ -13,7 +13,7 @@ const Right = () => {
                                     <div className="col-md-12">
                                         <div className="inside">
                                             <a href="#"><img className="avatar-md"
-                                                             src="dist/img/avatars/avatar-female-5.jpg"
+                                                             src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                              data-toggle="tooltip" data-placement="top" title="Keith"
                                                              alt="avatar" /></a>
                                             <div className="status">
@@ -65,7 +65,7 @@ const Right = () => {
                                                 <hr/>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -87,7 +87,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -116,7 +116,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -145,7 +145,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -176,7 +176,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -213,6 +213,39 @@ const Right = () => {
                                 </div>
                             </div>
                         </div>
+
+                        <div className="call" id="call1">
+                            <div className="content">
+                                <div className="container">
+                                    <div className="col-md-12">
+                                        <div className="inside">
+                                            <div className="panel">
+                                                <div className="participant">
+                                                    <img className="avatar-xxl"
+                                                         src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg" alt="avatar" />
+                                                        <span>Connecting</span>
+                                                </div>
+                                                <div className="options">
+                                                    <button className="btn option"><i
+                                                        className="material-icons md-30">mic</i></button>
+                                                    <button className="btn option"><i
+                                                        className="material-icons md-30">videocam</i></button>
+                                                    <button className="btn option call-end"><i
+                                                        className="material-icons md-30">call_end</i></button>
+                                                    <button className="btn option"><i
+                                                        className="material-icons md-30">person_add</i></button>
+                                                    <button className="btn option"><i
+                                                        className="material-icons md-30">volume_up</i></button>
+                                                </div>
+                                                <button className="btn back" name="1"><i
+                                                    className="material-icons md-24">chat</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
