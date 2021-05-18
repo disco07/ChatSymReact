@@ -1,4 +1,5 @@
 import React from 'react';
+import {LOCALHOST} from "../config";
 
 const Left = () => {
     return (
@@ -34,7 +35,7 @@ const Left = () => {
                                     <div className="list-group" id="chats" role="tablist">
                                         <a href="#list-chat" className="filterDiscussions all unread single active"
                                            id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Janette"
                                                  alt="avatar" />
                                                 <div className="status">
@@ -52,7 +53,7 @@ const Left = () => {
                                         </a>
                                         <a href="#list-empty" className="filterDiscussions all unread single"
                                            id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-male-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Michael"
                                                  alt="avatar" />
                                                 <div className="status">
@@ -69,7 +70,7 @@ const Left = () => {
                                         </a>
                                         <a href="#list-chat" className="filterDiscussions all unread single active"
                                            id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Janette"
                                                  alt="avatar" />
                                             <div className="status">
@@ -87,7 +88,7 @@ const Left = () => {
                                         </a>
                                         <a href="#list-empty" className="filterDiscussions all unread single"
                                            id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-male-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Michael"
                                                  alt="avatar" />
                                             <div className="status">
@@ -104,7 +105,7 @@ const Left = () => {
                                         </a>
                                         <a href="#list-chat" className="filterDiscussions all unread single active"
                                            id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Janette"
                                                  alt="avatar" />
                                             <div className="status">
@@ -122,7 +123,7 @@ const Left = () => {
                                         </a>
                                         <a href="#list-empty" className="filterDiscussions all unread single"
                                            id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-male-1.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Michael"
                                                  alt="avatar" />
                                             <div className="status">

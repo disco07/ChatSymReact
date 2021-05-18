@@ -1,4 +1,5 @@
 import React from 'react';
+import {LOCALHOST} from "../config";
 
 const Right = () => {
     return (
@@ -13,7 +14,7 @@ const Right = () => {
                                     <div className="col-md-12">
                                         <div className="inside">
                                             <a href="#"><img className="avatar-md"
-                                                             src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                                             src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-5.jpg`}
                                                              data-toggle="tooltip" data-placement="top" title="Keith"
                                                              alt="avatar" /></a>
                                             <div className="status">
@@ -65,7 +66,7 @@ const Right = () => {
                                                 <hr/>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -87,7 +88,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -116,7 +117,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -145,7 +146,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -176,7 +177,7 @@ const Right = () => {
                                             </div>
                                         </div>
                                         <div className="message">
-                                            <img className="avatar-md" src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg"
+                                            <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
                                                  data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />
                                                 <div className="text-main">
                                                     <div className="text-group">
@@ -222,7 +223,7 @@ const Right = () => {
                                             <div className="panel">
                                                 <div className="participant">
                                                     <img className="avatar-xxl"
-                                                         src="../../../public/assets/dist/img/avatars/avatar-female-5.jpg" alt="avatar" />
+                                                         src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`} alt="avatar" />
                                                         <span>Connecting</span>
                                                 </div>
                                                 <div className="options">

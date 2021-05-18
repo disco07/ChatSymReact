@@ -1,7 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {loginUser} from "../redux/action";
 
 const LoginPage = () => {
+    const [credential, setCredential] = useState({
+        email: '',
+        password: ''
+    })
+
+    const dispatch = useDispatch();
+    const conversation = useSelector(state => state.conversation)
+
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        setCredential({...credential, [name]: value});
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(loginUser(credential));
+        setCredential({});
+    }
+
     return (
         <>
             <div className="layout">
@@ -25,18 +47,18 @@ const LoginPage = () => {
                                     <p>or use your email account:</p>
                                     <form>
                                         <div className="form-group">
-                                            <input type="email" id="inputEmail" className="form-control"
+                                            <input type="email" value={credential.email} onChange={handleChange} name="email" id="inputEmail" className="form-control"
                                                    placeholder="Email Address" required/>
                                             <button className="btn icon"><i
                                                 className="material-icons">mail_outline</i></button>
                                         </div>
                                         <div className="form-group">
-                                            <input type="password" id="inputPassword" className="form-control"
+                                            <input type="password" value={credential.password} onChange={handleChange} name="password" id="inputPassword" className="form-control"
                                                    placeholder="Password" required/>
                                             <button className="btn icon"><i
                                                 className="material-icons">lock_outline</i></button>
                                         </div>
-                                        <button type="submit" className="btn button" formAction="index-2.html">Sign In
+                                        <button type="submit" onClick={handleSubmit} className="btn button" formAction="index-2.html">Sign In
                                         </button>
                                         <div className="callout">
                                             <span>Don't have account? <Link to={'/register'}>Create Account</Link></span>
