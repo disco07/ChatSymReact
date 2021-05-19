@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ReactDOM from 'react-dom';
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import LoginPage from "./pages/LoginPage";
@@ -8,7 +8,7 @@ import {Provider} from "react-redux";
 import store from "./redux/store";
 
 const App = () => {
-
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     return (
         <Provider store={store}>
             <HashRouter>
