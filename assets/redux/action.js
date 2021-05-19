@@ -23,7 +23,7 @@ export const loginUser = (data) => dispatch => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: data.email,
+            username: data.username,
             password: data.password
         })
     })
@@ -35,7 +35,7 @@ export const loginUser = (data) => dispatch => {
         })
         .then(response => {
             console.log(response)
-            //window.localStorage.setItem('authToken', response.token)
+            window.localStorage.setItem('authToken', response.token)
             return dispatch(login(response))
         })
 }

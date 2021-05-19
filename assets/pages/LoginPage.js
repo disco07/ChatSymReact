@@ -5,7 +5,7 @@ import {loginUser} from "../redux/action";
 
 const LoginPage = () => {
     const [credential, setCredential] = useState({
-        email: '',
+        username: '',
         password: ''
     })
 
@@ -47,7 +47,7 @@ const LoginPage = () => {
                                     <p>or use your email account:</p>
                                     <form>
                                         <div className="form-group">
-                                            <input type="email" value={credential.email} onChange={handleChange} name="email" id="inputEmail" className="form-control"
+                                            <input type="email" value={credential.username} onChange={handleChange} name="username" id="inputEmail" className="form-control"
                                                    placeholder="Email Address" required/>
                                             <button className="btn icon"><i
                                                 className="material-icons">mail_outline</i></button>
