@@ -13,6 +13,7 @@ class JWTCreatedSubscriber
         $data = $event->getData();
         $data["firstName"] = $user->getFirstName();
         $data["lastName"] = $user->getLastName();
+        $data["avatar"] = $user->avatar();
 
         $event->setData($data);
     }

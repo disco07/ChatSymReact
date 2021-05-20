@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {loginUser} from "../redux/action";
+import AuthContext from "../contexts/AuthContext";
 
-const LoginPage = () => {
+const LoginPage = ({history}) => {
     const [credential, setCredential] = useState({
         username: '',
         password: ''
     })
-
+    const {setIsAuthenticated} = useContext(AuthContext)
     const dispatch = useDispatch();
-    const conversation = useSelector(state => state.conversation)
 
     const handleChange = (e) => {
         const name = e.target.name;
@@ -20,8 +20,12 @@ const LoginPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(loginUser(credential));
-        setCredential({});
+        dispatch(loginUser(credential)).then((response) => {
+            if (response.data.token) {
+                setIsAuthenticated(true)
+                history.replace('/conversation')
+            }
+        });
     }
 
     return (

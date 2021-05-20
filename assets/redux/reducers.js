@@ -1,4 +1,4 @@
-import {USER_CONNECTED} from "./constants";
+import {CONVERSATION_LOAD, GET_CONVERSATION, USER_CONNECTED} from "./constants";
 
 const initialState = {
     login: "",
@@ -12,6 +12,16 @@ const conversation = (state = initialState, action) => {
             return {
                 ...state,
                 login: action.data
+            }
+        case CONVERSATION_LOAD:
+            return {
+                ...state,
+                isLoading: true
+            }
+        case GET_CONVERSATION:
+            return {
+                ...state,
+                items: [...state.items, action.data]
             }
         default:
             return state;

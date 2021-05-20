@@ -5,8 +5,10 @@ import Blank from "../components/right/Blank";
 import Right from "../components/right/Right";
 import SideBar from "../components/left/SideBar";
 import NewChat from "../components/left/NewChat";
+import {useSelector} from "react-redux";
 
 const ChatPage = () => {
+    const conversation = useSelector(state => state.conversation)
     return (
         <div className="layout">
             <SideBar />

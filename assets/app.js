@@ -6,20 +6,30 @@ import RegisterPage from "./pages/RegisterPage";
 import ChatPage from "./pages/ChatPage";
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import AuthContext from "./contexts/AuthContext";
+import Services from "./services/Services"
+import PrivateRoute from "./components/PrivateRoute";
+
+Services.setup()
 
 const App = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(Services.isAuthenticated);
     return (
         <Provider store={store}>
-            <HashRouter>
-                <main>
-                    <Switch>
-                        <Route path="/conversation" component={ChatPage}/>
-                        <Route path="/register" component={RegisterPage}/>
-                        <Route path="/" component={LoginPage}/>
-                    </Switch>
-                </main>
-            </HashRouter>
+            <AuthContext.Provider value={{
+                isAuthenticated,
+                setIsAuthenticated
+            }}>
+                <HashRouter>
+                    <main>
+                        <Switch>
+                            <PrivateRoute path="/conversation" component={ChatPage}/>
+                            <Route path="/register" component={RegisterPage}/>
+                            <Route path="/" component={LoginPage}/>
+                        </Switch>
+                    </main>
+                </HashRouter>
+            </AuthContext.Provider>
         </Provider>
     );
 }

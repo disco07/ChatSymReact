@@ -1,4 +1,10 @@
-import {USER_CONNECTED, USER_ERROR_CONNECTED} from "./constants";
+import {
+    CONVERSATION_ERROR,
+    CONVERSATION_LOAD,
+    GET_CONVERSATION,
+    USER_CONNECTED,
+    USER_ERROR_CONNECTED
+} from "./constants";
 
 import {LOCALHOST} from "../components/config";
 
@@ -13,6 +19,25 @@ export const errorLogin = (data) => {
     return {
         type: USER_ERROR_CONNECTED,
         data
+    }
+}
+
+export const loadConversation = () => {
+    return {
+        type: CONVERSATION_LOAD,
+    }
+}
+
+export const getConversation = (data) => {
+    return {
+        type: GET_CONVERSATION,
+        data
+    }
+}
+
+export const errorConversation = () => {
+    return {
+        type: CONVERSATION_ERROR,
     }
 }
 
@@ -34,8 +59,27 @@ export const loginUser = (data) => dispatch => {
             return response.json()
         })
         .then(response => {
-            console.log(response)
             window.localStorage.setItem('authToken', response.token)
             return dispatch(login(response))
+        })
+}
+
+export const fetchConversation = (bearer_token) => dispatch => {
+    dispatch(loadConversation())
+    return fetch(LOCALHOST + '/api/allconversations', {
+        method: 'GET',
+        headers: {
+            'Authorization': bearer(bearer_token),
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return dispatch(errorConversation(response))
+            }
+            return response.json()
+        })
+        .then(response => {
+            return dispatch(getConversation(response['hydra:member']))
         })
 }
