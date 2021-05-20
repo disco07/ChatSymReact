@@ -21,7 +21,8 @@ const conversation = (state = initialState, action) => {
         case GET_CONVERSATION:
             return {
                 ...state,
-                items: [...state.items, action.data]
+                isLoading: false,
+                items: action.data
             }
         default:
             return state;

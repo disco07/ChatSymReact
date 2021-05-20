@@ -41,6 +41,8 @@ export const errorConversation = () => {
     }
 }
 
+const bearer = (bearer_token) => 'Bearer ' + bearer_token;
+
 export const loginUser = (data) => dispatch => {
     return fetch(LOCALHOST + '/api/login_check', {
         method: 'POST',
