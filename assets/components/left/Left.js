@@ -1,7 +1,8 @@
 import React from 'react';
-import {LOCALHOST} from "../config";
+import Conversation from "./Conversation";
+import moment from "moment";
 
-const Left = () => {
+const Left = ({conversations}) => {
     return (
         <>
             <div className="sidebar" id="sidebar">
@@ -33,111 +34,13 @@ const Left = () => {
                                 <div className="discussions">
                                     <h1>Discussions</h1>
                                     <div className="list-group" id="chats" role="tablist">
-                                        <a href="#list-chat" className="filterDiscussions all unread single active"
-                                           id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Janette"
-                                                 alt="avatar" />
-                                                <div className="status">
-                                                    <i className="material-icons online">fiber_manual_record</i>
-                                                </div>
-                                                <div className="new bg-yellow">
-                                                    <span>+7</span>
-                                                </div>
-                                                <div className="data">
-                                                    <h5>Janette Dalton</h5>
-                                                    <span>Mon</span>
-                                                    <p>A new feature has been updated to your account. Check it
-                                                        out...</p>
-                                                </div>
-                                        </a>
-                                        <a href="#list-empty" className="filterDiscussions all unread single"
-                                           id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Michael"
-                                                 alt="avatar" />
-                                                <div className="status">
-                                                    <i className="material-icons offline">fiber_manual_record</i>
-                                                </div>
-                                                <div className="new bg-pink">
-                                                    <span>+10</span>
-                                                </div>
-                                                <div className="data">
-                                                    <h5>Michael Knudsen</h5>
-                                                    <span>Sun</span>
-                                                    <p>How can i improve my chances of getting a deposit?</p>
-                                                </div>
-                                        </a>
-                                        <a href="#list-chat" className="filterDiscussions all unread single active"
-                                           id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Janette"
-                                                 alt="avatar" />
-                                            <div className="status">
-                                                <i className="material-icons online">fiber_manual_record</i>
-                                            </div>
-                                            <div className="new bg-yellow">
-                                                <span>+7</span>
-                                            </div>
-                                            <div className="data">
-                                                <h5>Janette Dalton</h5>
-                                                <span>Mon</span>
-                                                <p>A new feature has been updated to your account. Check it
-                                                    out...</p>
-                                            </div>
-                                        </a>
-                                        <a href="#list-empty" className="filterDiscussions all unread single"
-                                           id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Michael"
-                                                 alt="avatar" />
-                                            <div className="status">
-                                                <i className="material-icons offline">fiber_manual_record</i>
-                                            </div>
-                                            <div className="new bg-pink">
-                                                <span>+10</span>
-                                            </div>
-                                            <div className="data">
-                                                <h5>Michael Knudsen</h5>
-                                                <span>Sun</span>
-                                                <p>How can i improve my chances of getting a deposit?</p>
-                                            </div>
-                                        </a>
-                                        <a href="#list-chat" className="filterDiscussions all unread single active"
-                                           id="list-chat-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Janette"
-                                                 alt="avatar" />
-                                            <div className="status">
-                                                <i className="material-icons online">fiber_manual_record</i>
-                                            </div>
-                                            <div className="new bg-yellow">
-                                                <span>+7</span>
-                                            </div>
-                                            <div className="data">
-                                                <h5>Janette Dalton</h5>
-                                                <span>Mon</span>
-                                                <p>A new feature has been updated to your account. Check it
-                                                    out...</p>
-                                            </div>
-                                        </a>
-                                        <a href="#list-empty" className="filterDiscussions all unread single"
-                                           id="list-empty-list" data-toggle="list" role="tab">
-                                            <img className="avatar-md" src={`${LOCALHOST}assets/dist/img/avatars/avatar-male-1.jpg`}
-                                                 data-toggle="tooltip" data-placement="top" title="Michael"
-                                                 alt="avatar" />
-                                            <div className="status">
-                                                <i className="material-icons offline">fiber_manual_record</i>
-                                            </div>
-                                            <div className="new bg-pink">
-                                                <span>+10</span>
-                                            </div>
-                                            <div className="data">
-                                                <h5>Michael Knudsen</h5>
-                                                <span>Sun</span>
-                                                <p>How can i improve my chances of getting a deposit?</p>
-                                            </div>
-                                        </a>
+                                        {
+                                            conversations.items
+                                                .sort((a, b) => moment(a.createdAt).format('LTS') < moment(b.createdAt).format('LTS'))
+                                                .map((conversation, index) => {
+                                                return <Conversation key={index} conversation={conversation}/>
+                                            })
+                                        }
                                     </div>
                                 </div>
                             </div>

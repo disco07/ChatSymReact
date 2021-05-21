@@ -7,20 +7,22 @@ import SideBar from "../components/left/SideBar";
 import NewChat from "../components/left/NewChat";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchConversation} from "../redux/action";
+import Services from "../services/Services";
 
 const ChatPage = () => {
     const dispatch = useDispatch()
-    const conversation = useSelector(state => state.conversation)
+    const conversations = useSelector(state => state.conversations)
     useEffect(() => {
         dispatch(fetchConversation(localStorage.getItem('authToken')))
     }, [])
     return (
         <div className="layout">
-            <SideBar />
-            <Left />
+            <SideBar user={Services.user()} />
+            <Left conversations={conversations} />
             <NewChat />
             <Switch>
-                <Route path={"/conversation/:id/:idU"} component={Right} />
+                <Route path={"/conversation/:id/:idU"}
+                       render={props => <Right {...props} conversationId={props.match.params.id} otherUser={props.match.params.idU} />} />
                 <Route path={"/conversation"} component={Blank} />
             </Switch>
         </div>

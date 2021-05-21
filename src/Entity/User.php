@@ -26,7 +26,7 @@ class User implements UserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"read:user"})
+     * @Groups({"read:user", "read:message"})
      */
     private $id;
 
@@ -78,6 +78,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"read:message"})
      */
     private $avatar;
 

@@ -1,7 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LOCALHOST} from "../config";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchMessage} from "../../redux/action";
 
-const Right = () => {
+const Right = ({conversationId, otherUser}) => {
+    const dispatch = useDispatch()
+    const message = useSelector(state => state.conversations)
+
+    useEffect(() => {
+        dispatch(fetchMessage(conversationId ,localStorage.getItem('authToken')))
+    }, []);
+
     return (
         <>
             <div className="main">

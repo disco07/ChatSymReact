@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
-import conversation from "./reducers";
+import conversations from "./reducers";
 
 const rootReducer = combineReducers({
-    conversation
+    conversations
 })
 
 const store = createStore(rootReducer, applyMiddleware(thunk))

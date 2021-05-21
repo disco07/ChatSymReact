@@ -36,8 +36,7 @@ class Conversations
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
-     * @Groups({"read:message"})
-     * @Groups({"read:conversation"})
+     * @Groups({"read:message", "read:conversation"})
      */
     private $id;
 

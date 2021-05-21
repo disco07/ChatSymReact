@@ -13,10 +13,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=MessagesRepository::class)
  * @ApiResource(
- *     normalizationContext={
- *          "get"={"read:message"},
- *      },
+ *     normalizationContext={"groups"={"read:message"}},
  *     collectionOperations={
+ *          "get",
  *          "post_message_conv"={
  *              "method"="POST",
  *              "path"="/newMessage",
@@ -56,6 +55,7 @@ class Messages
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @Groups({"read:message"})
      */
     private $users;
 
