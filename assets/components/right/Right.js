@@ -6,10 +6,11 @@ import {fetchMessage} from "../../redux/action";
 const Right = ({conversationId, otherUser}) => {
     const dispatch = useDispatch()
     const message = useSelector(state => state.conversations)
+    const conversationIndex = message.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
 
     useEffect(() => {
         dispatch(fetchMessage(conversationId ,localStorage.getItem('authToken')))
-    }, []);
+    }, [conversationId]);
 
     return (
         <>
@@ -22,15 +23,23 @@ const Right = ({conversationId, otherUser}) => {
                                 <div className="container">
                                     <div className="col-md-12">
                                         <div className="inside">
-                                            <a href="#"><img className="avatar-md"
-                                                             src={`${LOCALHOST}assets/dist/img/avatars/avatar-female-5.jpg`}
-                                                             data-toggle="tooltip" data-placement="top" title="Keith"
-                                                             alt="avatar" /></a>
+                                            <a href="#">
+                                                {
+                                                    conversationIndex !== -1 &&
+                                                    <img className="avatar-md"
+                                                         src={`${LOCALHOST}/assets/dist/img/avatars/${message.items[conversationIndex].avatar}`}
+                                                         data-toggle="tooltip" data-placement="top" title={message.items[conversationIndex].firstName}
+                                                         alt="avatar" />
+                                                }
+                                            </a>
                                             <div className="status">
                                                 <i className="material-icons online">fiber_manual_record</i>
                                             </div>
                                             <div className="data">
-                                                <h5><a href="#">Keith Morris</a></h5>
+                                                {
+                                                    conversationIndex !== -1 &&
+                                                    <h5><a href="#">{message.items[conversationIndex].firstName +" "+ message.items[conversationIndex].lastName}</a></h5>
+                                                }
                                                 <span>Active now</span>
                                             </div>
                                             <button className="btn connect d-md-block d-none" name="1"><i
