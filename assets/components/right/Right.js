@@ -5,14 +5,14 @@ import {fetchMessage} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
 
-const Right = ({conversationId, otherUser}) => {
+const Right = ({conversationId, user, otherUser}) => {
     const dispatch = useDispatch()
-    const messages = useSelector(state => state.conversations)
-    const conversationIndex = messages.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
+    const conversation = useSelector(state => state.conversations)
+    const conversationIndex = conversation.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
 
     useEffect(() => {
-        dispatch(fetchMessage(conversationId ,localStorage.getItem('authToken')))
-    }, [conversationId]);
+        conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
+    }, [conversationId, conversation.items.length]);
 
     return (
         <>
@@ -29,9 +29,10 @@ const Right = ({conversationId, otherUser}) => {
                                                 {
                                                     conversationIndex !== -1 &&
                                                     <img className="avatar-md"
-                                                         src={`${LOCALHOST}/assets/dist/img/avatars/${messages.items[conversationIndex].avatar}`}
-                                                         data-toggle="tooltip" data-placement="top" title={messages.items[conversationIndex].firstName}
-                                                         alt="avatar" />
+                                                         src={`${LOCALHOST}/assets/dist/img/avatars/${conversation.items[conversationIndex].avatar}`}
+                                                         data-toggle="tooltip" data-placement="top"
+                                                         title={conversation.items[conversationIndex].firstName}
+                                                         alt="avatar"/>
                                                 }
                                             </a>
                                             <div className="status">
@@ -40,7 +41,9 @@ const Right = ({conversationId, otherUser}) => {
                                             <div className="data">
                                                 {
                                                     conversationIndex !== -1 &&
-                                                    <h5><a href="#">{messages.items[conversationIndex].firstName +" "+ messages.items[conversationIndex].lastName}</a></h5>
+                                                    <h5><a
+                                                        href="#">{conversation.items[conversationIndex].firstName + " " + conversation.items[conversationIndex].lastName}</a>
+                                                    </h5>
                                                 }
                                                 <span>Active now</span>
                                             </div>
@@ -62,15 +65,15 @@ const Right = ({conversationId, otherUser}) => {
                                                         className="material-icons">videocam</i>Video Call
                                                     </button>
                                                     <hr/>
-                                                        <button className="dropdown-item"><i
-                                                            className="material-icons">clear</i>Clear History
-                                                        </button>
-                                                        <button className="dropdown-item"><i
-                                                            className="material-icons">block</i>Block Contact
-                                                        </button>
-                                                        <button className="dropdown-item"><i
-                                                            className="material-icons">delete</i>Delete Contact
-                                                        </button>
+                                                    <button className="dropdown-item"><i
+                                                        className="material-icons">clear</i>Clear History
+                                                    </button>
+                                                    <button className="dropdown-item"><i
+                                                        className="material-icons">block</i>Block Contact
+                                                    </button>
+                                                    <button className="dropdown-item"><i
+                                                        className="material-icons">delete</i>Delete Contact
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -80,16 +83,40 @@ const Right = ({conversationId, otherUser}) => {
                             <div className="content" id="content">
                                 <div className="container">
                                     <div className="col-md-12">
-                                        <div className="date">
-                                            <hr/>
-                                            <span>Yesterday</span>
-                                            <hr/>
-                                        </div>
-                                        <Messages/>
+                                        {
+                                            conversationIndex !== -1 &&
+                                            conversation.items[conversationIndex].messages?.map(message => {
+                                                return (
+                                                    <>
+                                                        <div className="date">
+                                                            <hr/>
+                                                            <span>Yesterday</span>
+                                                            <hr/>
+                                                        </div>
+                                                        <Messages message={message} user={user}/>
+                                                    </>
+                                                )
+                                            })
+                                        }
+                                        {/*<div className="message">*/}
+                                        {/*    <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}*/}
+                                        {/*         data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />*/}
+                                        {/*    <div className="text-main">*/}
+                                        {/*        <div className="text-group">*/}
+                                        {/*            <div className="text typing">*/}
+                                        {/*                <div className="wave">*/}
+                                        {/*                    <span className="dot"/>*/}
+                                        {/*                    <span className="dot"/>*/}
+                                        {/*                    <span className="dot"/>*/}
+                                        {/*                </div>*/}
+                                        {/*            </div>*/}
+                                        {/*        </div>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
                                     </div>
                                 </div>
                             </div>
-                            <Input otherUser={otherUser} />
+                            <Input otherUser={otherUser}/>
                         </div>
 
                         <div className="call" id="call1">
@@ -100,8 +127,9 @@ const Right = ({conversationId, otherUser}) => {
                                             <div className="panel">
                                                 <div className="participant">
                                                     <img className="avatar-xxl"
-                                                         src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`} alt="avatar" />
-                                                        <span>Connecting</span>
+                                                         src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}
+                                                         alt="avatar"/>
+                                                    <span>Connecting</span>
                                                 </div>
                                                 <div className="options">
                                                     <button className="btn option"><i

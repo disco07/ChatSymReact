@@ -22,7 +22,9 @@ const ChatPage = () => {
             <NewChat />
             <Switch>
                 <Route path={"/conversation/:id/:idU"}
-                       render={props => <Right {...props} conversationId={props.match.params.id} otherUser={props.match.params.idU} />} />
+                       render={props => <Right {...props} conversationId={props.match.params.id}
+                                               otherUser={props.match.params.idU}
+                                               user={Services.user()} />} />
                 <Route path={"/conversation"} component={Blank} />
             </Switch>
         </div>
