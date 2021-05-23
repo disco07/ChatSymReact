@@ -3,21 +3,22 @@ import {LOCALHOST} from "../config";
 import moment from "moment";
 
 const Messages = ({message, user}) => {
+
     return (
         <>
             {
                 <div className={parseInt(message.users.id) === parseInt(user) ? `message me` : `message`}>
-                <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}
-                     data-toggle="tooltip" data-placement="top" title={message.users.firstname} alt="avatar" />
-                <div className="text-main">
-                    <div className="text-group">
-                        <div className="text">
-                            <p>{message.content}</p>
+                    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}
+                         data-toggle="tooltip" data-placement="top" title={message.users.firstName} alt="avatar"/>
+                    <div className="text-main">
+                        <div className="text-group">
+                            <div className="text">
+                                <p>{message.content}</p>
+                            </div>
                         </div>
+                        <span>{moment(message.createdAt).format('LT')}</span>
                     </div>
-                    <span>{moment(message.createdAt).format('LT')}</span>
                 </div>
-            </div>
             }
             {/*<div className="message">*/}
             {/*    <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}*/}

@@ -1,7 +1,7 @@
 import {
     CONVERSATION_ERROR,
     CONVERSATION_LOAD,
-    GET_CONVERSATION, GET_MESSAGE, MESSAGE_ERROR, MESSAGE_LOAD,
+    GET_CONVERSATION, GET_MESSAGE, MESSAGE_ERROR, MESSAGE_LOAD, POST_MESSAGE,
     USER_CONNECTED,
     USER_ERROR_CONNECTED
 } from "./constants";
@@ -50,6 +50,14 @@ export const loadMessage = () => {
 export const getMessage = (conversationId, data) => {
     return {
         type: GET_MESSAGE,
+        conversationId,
+        data
+    }
+}
+
+export const postMessage = (conversationId, data) => {
+    return {
+        type: POST_MESSAGE,
         conversationId,
         data
     }
@@ -114,6 +122,28 @@ export const fetchMessage = (conversationId, bearer_token) => dispatch => {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
         },
+    })
+        .then(response => {
+            if (!response.ok) {
+                return dispatch(errorMessage(response))
+            }
+            return response.json()
+        })
+        .then(response => {
+            return dispatch(getMessage(conversationId, response['hydra:member']))
+        })
+}
+
+export const postMessages = (conversationId, content, bearer_token) => dispatch => {
+    return fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
+        method: 'GET',
+        headers: {
+            'Authorization': bearer(bearer_token),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: content
+        })
     })
         .then(response => {
             if (!response.ok) {

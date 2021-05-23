@@ -1,7 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {LOCALHOST} from "../config";
+import Services from "../../services/Services";
+import AuthContext from "../../contexts/AuthContext";
 
 const SideBar = ({user}) => {
+    const {setIsAuthenticated} = useContext(AuthContext)
+    const logout = () => {
+        Services.logout()
+        setIsAuthenticated(false)
+    }
     return (
         <>
             <div className="navigation">
@@ -17,7 +24,7 @@ const SideBar = ({user}) => {
                                 className="material-icons">notifications_none</i></a>
                             <button className="btn mode"><i className="material-icons">brightness_2</i></button>
                             <a href="#settings" data-toggle="tab"><i className="material-icons">settings</i></a>
-                            <button className="btn power" onClick="visitPage();"><i
+                            <button className="btn power" onClick={logout}><i
                                 className="material-icons">power_settings_new</i></button>
                         </div>
                     </div>

@@ -6,3 +6,4 @@ export const CONVERSATION_ERROR = "CONVERSATION_ERROR";
 export const MESSAGE_LOAD = "MESSAGE_LOAD";
 export const GET_MESSAGE = "GET_MESSAGE";
 export const MESSAGE_ERROR = "MESSAGE_ERROR";
+export const POST_MESSAGE = "POST_MESSAGE";

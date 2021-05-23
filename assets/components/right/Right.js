@@ -85,15 +85,15 @@ const Right = ({conversationId, user, otherUser}) => {
                                     <div className="col-md-12">
                                         {
                                             conversationIndex !== -1 &&
-                                            conversation.items[conversationIndex].messages?.map(message => {
+                                            conversation.items[conversationIndex].messages?.map((message, index) => {
                                                 return (
                                                     <>
-                                                        <div className="date">
-                                                            <hr/>
-                                                            <span>Yesterday</span>
-                                                            <hr/>
-                                                        </div>
-                                                        <Messages message={message} user={user}/>
+                                                        {/*<div className="date">*/}
+                                                        {/*    <hr/>*/}
+                                                        {/*    <span>Yesterday</span>*/}
+                                                        {/*    <hr/>*/}
+                                                        {/*</div>*/}
+                                                        <Messages key={index} message={message} user={user.id}/>
                                                     </>
                                                 )
                                             })

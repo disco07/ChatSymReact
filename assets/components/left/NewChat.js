@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const NewChat = () => {
+    const [content, setContent] = useState('')
+    const handleChange = (e) => {
+        setContent(e.target.value)
+    }
     return (
         <>
             <div className="modal fade" id="startnewchat" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -31,7 +35,7 @@ const NewChat = () => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
-                                    <textarea className="text-control" id="message"
+                                    <textarea className="text-control" value={content} onChange={handleChange} id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
                                 <button type="submit" className="btn button w-100">Start New Chat</button>
