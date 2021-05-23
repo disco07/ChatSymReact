@@ -116,7 +116,7 @@ const Right = ({conversationId, user, otherUser}) => {
                                     </div>
                                 </div>
                             </div>
-                            <Input otherUser={otherUser}/>
+                            <Input conversationId={conversationId} otherUser={otherUser}/>
                         </div>
 
                         <div className="call" id="call1">

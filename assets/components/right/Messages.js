@@ -12,7 +12,7 @@ const Messages = ({message, user}) => {
                          data-toggle="tooltip" data-placement="top" title={message.users.firstName} alt="avatar"/>
                     <div className="text-main">
                         <div className="text-group">
-                            <div className="text">
+                            <div className={parseInt(message.users.id) === parseInt(user) ? `text me` : `text`}>
                                 <p>{message.content}</p>
                             </div>
                         </div>
@@ -20,12 +20,12 @@ const Messages = ({message, user}) => {
                     </div>
                 </div>
             }
-            {/*<div className="message">*/}
-            {/*    <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}*/}
-            {/*         data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />*/}
+            {/*<div className={parseInt(message.users.id) === parseInt(user) ? `message me` : `message`}>*/}
+            {/*    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}*/}
+            {/*         data-toggle="tooltip" data-placement="top" title={message.users.firstName} alt="avatar" />*/}
             {/*    <div className="text-main">*/}
             {/*        <div className="text-group">*/}
-            {/*            <div className="text">*/}
+            {/*            <div className={parseInt(message.users.id) === parseInt(user) ? `text me` : `text`}>*/}
             {/*                <div className="attachment">*/}
             {/*                    <button className="btn attach"><i*/}
             {/*                        className="material-icons md-18">insert_drive_file</i>*/}
@@ -37,7 +37,7 @@ const Messages = ({message, user}) => {
             {/*                </div>*/}
             {/*            </div>*/}
             {/*        </div>*/}
-            {/*        <span>11:07 PM</span>*/}
+            {/*        <span>{moment(message.createdAt).format('LT')}</span>*/}
             {/*    </div>*/}
             {/*</div>*/}
         </>

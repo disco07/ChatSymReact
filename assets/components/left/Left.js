@@ -36,7 +36,7 @@ const Left = ({conversations}) => {
                                     <div className="list-group" id="chats" role="tablist">
                                         {
                                             conversations.items
-                                                .sort((a, b) => moment(a.createdAt).format('LTS') < moment(b.createdAt).format('LTS'))
+                                                .sort((a, b) => moment(a.createdAt).format('LTS') > moment(b.createdAt).format('LTS'))
                                                 .map((conversation, index) => {
                                                 return <Conversation key={index} conversation={conversation}/>
                                             })

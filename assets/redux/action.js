@@ -1,8 +1,8 @@
 import {
+    ADD_MESSAGE,
     CONVERSATION_ERROR,
     CONVERSATION_LOAD,
-    GET_CONVERSATION, GET_MESSAGE, MESSAGE_ERROR, MESSAGE_LOAD, POST_MESSAGE,
-    USER_CONNECTED,
+    GET_CONVERSATION, GET_MESSAGE, MESSAGE_ERROR, MESSAGE_LOAD, SET_LAST_MESSAGE, USER_CONNECTED,
     USER_ERROR_CONNECTED
 } from "./constants";
 
@@ -55,9 +55,17 @@ export const getMessage = (conversationId, data) => {
     }
 }
 
-export const postMessage = (conversationId, data) => {
+export const addMessage = (conversationId, data) => {
     return {
-        type: POST_MESSAGE,
+        type: ADD_MESSAGE,
+        conversationId,
+        data
+    }
+}
+
+export const setLastMessage = (conversationId, data) => {
+    return {
+        type: SET_LAST_MESSAGE,
         conversationId,
         data
     }
@@ -136,7 +144,7 @@ export const fetchMessage = (conversationId, bearer_token) => dispatch => {
 
 export const postMessages = (conversationId, content, bearer_token) => dispatch => {
     return fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
@@ -146,12 +154,10 @@ export const postMessages = (conversationId, content, bearer_token) => dispatch 
         })
     })
         .then(response => {
-            if (!response.ok) {
-                return dispatch(errorMessage(response))
-            }
             return response.json()
         })
         .then(response => {
-            return dispatch(getMessage(conversationId, response['hydra:member']))
+            dispatch(setLastMessage(conversationId, response['hydra:member']))
+            return dispatch(addMessage(conversationId, response['hydra:member']))
         })
 }

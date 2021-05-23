@@ -1,4 +1,11 @@
-import {CONVERSATION_LOAD, GET_CONVERSATION, GET_MESSAGE, MESSAGE_LOAD, USER_CONNECTED} from "./constants";
+import {
+    ADD_MESSAGE,
+    CONVERSATION_LOAD,
+    GET_CONVERSATION,
+    GET_MESSAGE,
+    MESSAGE_LOAD, SET_LAST_MESSAGE,
+    USER_CONNECTED
+} from "./constants";
 
 const initialState = {
     login: "",
@@ -38,6 +45,29 @@ const conversations = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
                 items: _newConversation
+            }
+        case ADD_MESSAGE:
+            const _newConversationWithMessage = state.items.map(conversation => {
+                return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
+                    {...conversation, messages: [...conversation.messages, action.data]} : conversation
+            })
+            return {
+                ...state,
+                isLoading: false,
+                items: [_newConversationWithMessage]
+            }
+        case SET_LAST_MESSAGE:
+            const _newConversationWithMessageConv = state.items.map(conversation => {
+                return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
+                    (conversation.content = action.data.content,
+                        conversation.createdAt = action.data.createdAt,
+                            {...conversation}
+                    ) : conversation
+            })
+            return {
+                ...state,
+                isLoading: false,
+                items: [_newConversationWithMessageConv]
             }
         default:
             return state;

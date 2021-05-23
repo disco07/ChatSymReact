@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
+import {postMessages} from "../../redux/action";
 
-const Input = () => {
+const Input = ({conversationId, otherUser}) => {
     const [content, setContent] = useState('')
     const dispatch = useDispatch()
 
@@ -10,7 +11,8 @@ const Input = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-
+        dispatch(postMessages(conversationId, content, localStorage.getItem('authToken')))
+        setContent('')
     }
     return (
         <>
