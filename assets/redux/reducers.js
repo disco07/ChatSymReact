@@ -47,27 +47,31 @@ const conversations = (state = initialState, action) => {
                 items: _newConversation
             }
         case ADD_MESSAGE:
-            const _newConversationWithMessage = state.items.map(conversation => {
-                return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
-                    {...conversation, messages: [...conversation.messages, action.data]} : conversation
-            })
+            const _newItemsFinal = state.items.map(conversation => {
+                return parseInt(conversation.conversationId) === parseInt(action.conversationId)
+                    ?
+                    (
+                        Object.assign({}, conversation, {messages: [...conversation.messages, action.data]})
+                    )
+                    : Object.assign({}, conversation);
+            });
             return {
                 ...state,
-                isLoading: false,
-                items: [_newConversationWithMessage]
+                items: [..._newItemsFinal]
             }
         case SET_LAST_MESSAGE:
-            const _newConversationWithMessageConv = state.items.map(conversation => {
+            const _newConversationsWithLastMessage = state.items.map(conversation => {
                 return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
-                    (conversation.content = action.data.content,
+                    (
                         conversation.createdAt = action.data.createdAt,
-                            {...conversation}
-                    ) : conversation
+                            conversation.content = action.data.content,
+                            Object.assign({}, conversation)
+                    ) :
+                    Object.assign({}, conversation)
             })
             return {
                 ...state,
-                isLoading: false,
-                items: [_newConversationWithMessageConv]
+                items: [..._newConversationsWithLastMessage]
             }
         default:
             return state;

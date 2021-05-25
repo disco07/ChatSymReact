@@ -157,7 +157,7 @@ export const postMessages = (conversationId, content, bearer_token) => dispatch 
             return response.json()
         })
         .then(response => {
-            dispatch(setLastMessage(conversationId, response['hydra:member']))
-            return dispatch(addMessage(conversationId, response['hydra:member']))
+            dispatch(setLastMessage(conversationId, response))
+            return dispatch(addMessage(conversationId, response))
         })
 }
