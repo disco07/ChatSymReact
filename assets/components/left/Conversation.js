@@ -16,17 +16,18 @@ const Conversation = ({conversation, totalUnread, conversationId}) => {
 
     return (
         <>
-            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.id} className={unread > 0 ?
-                "filterDiscussions all unread single" : "filterDiscussions all read single"}
-               id="list-chat-list" data-toggle="list" role="tab">
+            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.id}
+                     className={unread > 0 ?
+                         "filterDiscussions all unread single" : "filterDiscussions all read single"}
+                     id="list-chat-list" data-toggle="list" role="tab">
                 <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${conversation.avatar}`}
                      data-toggle="tooltip" data-placement="top" title={conversation.firstName}
-                     alt="avatar" />
+                     alt="avatar"/>
                 <div className="status">
                     <i className="material-icons online">fiber_manual_record</i>
                 </div>
                 {
-                    conversation.conv.totalUnread > 0 &&
+                    unread > 0 && parseInt(conversationId) === parseInt(conversation.conversationId) &&
                     <div className={`new ${unreadColor(conversation.conv.totalUnread)}`}>
                         <span>+{conversation.conv.totalUnread}</span>
                     </div>

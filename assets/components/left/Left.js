@@ -8,13 +8,15 @@ const Left = ({conversations}) => {
     const [unread, setUnread] = useState(0)
     const [conversationId, setConversationId] = useState(0)
     const {socket} = useContext(SocketContext)
+
     useEffect(() => {
         socket.on('newMessage', response => {
-            setLastMessage(response, response.conversationId);
+            console.log(response)
+            setLastMessage(response.conversationId, response);
             setUnread(response.totalUnread);
             setConversationId(response.conversationId);
         });
-    }, []);
+    }, [conversationId]);
 
     return (
         <>

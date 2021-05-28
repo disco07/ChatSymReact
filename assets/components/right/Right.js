@@ -1,14 +1,32 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchMessage} from "../../redux/action";
+import {addMessage, fetchMessage} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
+import SocketContext from "../../contexts/SocketContext";
 
 const Right = ({conversationId, user, otherUser}) => {
     const dispatch = useDispatch()
     const conversation = useSelector(state => state.conversations)
     const conversationIndex = conversation.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
+    const {socket} = useContext(SocketContext)
+    const ref = useRef(null)
+
+    useEffect(() => {
+        if (ref) {
+            ref.current.addEventListener('DOMNodeInserted', event => {
+                const { currentTarget: target } = event;
+                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+            });
+        }
+    }, [])
+
+    useEffect(() => {
+        socket.on('newMessage', response => {
+            addMessage(conversationId, response)
+        });
+    }, [conversationId])
 
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
@@ -80,7 +98,7 @@ const Right = ({conversationId, user, otherUser}) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="content" id="content">
+                            <div className="content" id="content" ref={ref}>
                                 <div className="container">
                                     <div className="col-md-12">
                                         {

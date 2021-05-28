@@ -16,7 +16,6 @@ let socketIO = io(ENDPOINT)
 
 const ChatPage = () => {
     const [socket, setSocket] = useState(socketIO)
-    console.log(socket)
     const dispatch = useDispatch()
     const conversations = useSelector(state => state.conversations)
     useEffect(() => {

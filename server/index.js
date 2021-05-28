@@ -22,7 +22,6 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', (data, userId) => {
         io.to(userId).emit('newMessage', data);
-
     });
 
     socket.on('startTyping', (userId) => {
