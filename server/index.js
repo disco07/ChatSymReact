@@ -25,9 +25,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('startTyping', (userId) => {
+        console.log('start')
         socket.to(userId).emit('userStartTyping', true)
     })
     socket.on('stopTyping', (userId) => {
+        console.log('stop')
         socket.to(userId).emit('userStopTyping', false)
     })
 

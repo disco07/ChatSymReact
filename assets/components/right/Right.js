@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
 import {addMessage, fetchMessage} from "../../redux/action";
@@ -9,6 +9,10 @@ import SocketContext from "../../contexts/SocketContext";
 const Right = ({conversationId, user, otherUser}) => {
     const dispatch = useDispatch()
     const conversation = useSelector(state => state.conversations)
+    const [isTyping, setIsTyping] = useState({
+        isTyping: false,
+        idConversation: ''
+    })
     const conversationIndex = conversation.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
     const {socket} = useContext(SocketContext)
     const ref = useRef(null)
@@ -16,8 +20,8 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         if (ref) {
             ref.current.addEventListener('DOMNodeInserted', event => {
-                const { currentTarget: target } = event;
-                target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+                const {currentTarget: target} = event;
+                target.scroll({top: target.scrollHeight, behavior: 'smooth'});
             });
         }
     }, [])
@@ -27,6 +31,12 @@ const Right = ({conversationId, user, otherUser}) => {
             addMessage(conversationId, response)
         });
     }, [conversationId])
+
+    useEffect(() => {
+        socket.on('userStartTyping', (data, idConv) => console.log('dedans'))
+        socket.on('userStopTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
+
+    }, []);
 
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
@@ -116,21 +126,28 @@ const Right = ({conversationId, user, otherUser}) => {
                                                 )
                                             })
                                         }
-                                        {/*<div className="message">*/}
-                                        {/*    <img className="avatar-md" src={`${LOCALHOST}+assets/dist/img/avatars/avatar-female-5.jpg`}*/}
-                                        {/*         data-toggle="tooltip" data-placement="top" title="Keith" alt="avatar" />*/}
-                                        {/*    <div className="text-main">*/}
-                                        {/*        <div className="text-group">*/}
-                                        {/*            <div className="text typing">*/}
-                                        {/*                <div className="wave">*/}
-                                        {/*                    <span className="dot"/>*/}
-                                        {/*                    <span className="dot"/>*/}
-                                        {/*                    <span className="dot"/>*/}
-                                        {/*                </div>*/}
-                                        {/*            </div>*/}
-                                        {/*        </div>*/}
-                                        {/*    </div>*/}
-                                        {/*</div>*/}
+                                        {
+                                            conversationIndex !== -1 &&
+                                            isTyping.isTyping && isTyping.idConversation === conversationId &&
+                                            <div className="message">
+                                                <img className="avatar-md"
+                                                     src={`${LOCALHOST}/assets/dist/img/avatars/${conversation.items[conversationIndex].avatar}`}
+                                                     data-toggle="tooltip" data-placement="top"
+                                                     title={conversation.items[conversationIndex].firstName}
+                                                     alt="avatar"/>
+                                                <div className="text-main">
+                                                    <div className="text-group">
+                                                        <div className="text typing">
+                                                            <div className="wave">
+                                                                <span className="dot"/>
+                                                                <span className="dot"/>
+                                                                <span className="dot"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                     </div>
                                 </div>
                             </div>
