@@ -1,8 +1,21 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Conversation from "./Conversation";
 import moment from "moment";
+import SocketContext from "../../contexts/SocketContext";
+import {setLastMessage} from "../../redux/action";
 
 const Left = ({conversations}) => {
+    const [unread, setUnread] = useState(0)
+    const [conversationId, setConversationId] = useState(0)
+    const {socket} = useContext(SocketContext)
+    useEffect(() => {
+        socket.on('newMessage', response => {
+            setLastMessage(response, response.conversationId);
+            setUnread(response.totalUnread);
+            setConversationId(response.conversationId);
+        });
+    }, []);
+
     return (
         <>
             <div className="sidebar" id="sidebar">
@@ -38,7 +51,7 @@ const Left = ({conversations}) => {
                                             conversations.items
                                                 .sort((a, b) => moment(a.createdAt).format('LTS') < moment(b.createdAt).format('LTS'))
                                                 .map((conversation, index) => {
-                                                return <Conversation key={index} conversation={conversation}/>
+                                                return <Conversation key={index} totalUnread={unread} conversationId={conversationId} conversation={conversation}/>
                                             })
                                         }
                                     </div>

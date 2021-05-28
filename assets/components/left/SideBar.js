@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {LOCALHOST} from "../config";
+import {LOCALHOST} from "../../services/config";
 import Services from "../../services/Services";
 import AuthContext from "../../contexts/AuthContext";
 

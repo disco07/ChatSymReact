@@ -6,7 +6,7 @@ import {
     USER_ERROR_CONNECTED
 } from "./constants";
 
-import {LOCALHOST} from "../components/config";
+import {LOCALHOST} from "../services/config";
 
 export const login = (data) => {
     return {

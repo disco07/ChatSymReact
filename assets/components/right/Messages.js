@@ -1,5 +1,5 @@
 import React from 'react';
-import {LOCALHOST} from "../config";
+import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 
 const Messages = ({message, user}) => {

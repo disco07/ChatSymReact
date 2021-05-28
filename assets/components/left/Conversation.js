@@ -1,15 +1,22 @@
-import React from 'react';
-import {LOCALHOST} from "../config";
+import React, {useEffect, useState} from 'react';
+import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 import {NavLink} from "react-router-dom";
 
-const Conversation = ({conversation}) => {
+const Conversation = ({conversation, totalUnread, conversationId}) => {
+    const [unread, setUnread] = useState(conversation.conv.totalUnread)
     const unreadColor = (unread) => {
         return unread < 5 ? "bg-yellow" : unread < 10 ? "bg-green" : "bg-pink"
     }
+    useEffect(() => {
+        if (parseInt(totalUnread) > 0) {
+            setUnread(totalUnread);
+        }
+    }, [totalUnread]);
+
     return (
         <>
-            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.id} className={conversation.conv.totalUnread > 0 ?
+            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.id} className={unread > 0 ?
                 "filterDiscussions all unread single" : "filterDiscussions all read single"}
                id="list-chat-list" data-toggle="list" role="tab">
                 <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${conversation.avatar}`}

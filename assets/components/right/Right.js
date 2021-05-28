@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {LOCALHOST} from "../config";
+import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchMessage} from "../../redux/action";
 import Input from "./Input";
