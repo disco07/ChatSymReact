@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendMessage', (data, userId) => {
+        console.log(data)
         io.to(userId).emit('newMessage', data);
     });
 
