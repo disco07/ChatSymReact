@@ -16,13 +16,11 @@ let socketIO = io(ENDPOINT)
 
 const ChatPage = () => {
     const [socket, setSocket] = useState(socketIO)
-    console.log("1",socketIO)
-    console.log("2",socket)
     const dispatch = useDispatch()
     const conversations = useSelector(state => state.conversations)
     useEffect(() => {
         dispatch(fetchConversation(localStorage.getItem('authToken')))
-        socketIO.emit("join", {user: Services.user()})
+        socketIO.emit("join", {user: Services.user().id})
     }, [])
     return (
         <SocketContext.Provider value={{

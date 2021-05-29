@@ -16,7 +16,6 @@ const Input = ({conversationId, otherUser}) => {
         e.preventDefault();
         dispatch(postMessages(conversationId, content, localStorage.getItem('authToken')))
             .then(response => {
-                console.log(response)
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,
                     "content": response.data.content,

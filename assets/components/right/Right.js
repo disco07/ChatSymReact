@@ -33,7 +33,7 @@ const Right = ({conversationId, user, otherUser}) => {
     }, [conversationId])
 
     useEffect(() => {
-        socket.on('userStartTyping', (data, idConv) => console.log('dedans'))
+        socket.on('userStartTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
         socket.on('userStopTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
 
     }, []);
