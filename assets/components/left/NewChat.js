@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {fetchUsers} from "../../redux/action";
+import {fetchUsers, postConversations} from "../../redux/action";
 import {LOCALHOST} from "../../services/config";
 
 const NewChat = () => {
@@ -29,6 +29,7 @@ const NewChat = () => {
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
         setUserSelected(user)
+        postConversations(idUser, window.localStorage.getItem('authToken'))
     }
 
     return (

@@ -182,15 +182,10 @@ export const postConversations = (user, bearer_token) => dispatch => {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            content: content
-        })
+        body: JSON.stringify({})
     })
         .then(response => {
             return response.json()
         })
-        .then(response => {
-            dispatch(setLastMessage(conversationId, response))
-            return dispatch(addMessage(conversationId, response))
-        })
+        .then(response => response)
 }
