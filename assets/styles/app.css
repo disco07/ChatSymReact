@@ -6,6 +6,7 @@
     box-shadow: 1px 1px 12px #bdbac2;
     background-color: #fdfdfd;
     width: 370px;
+    cursor: pointer;
     z-index: 10;
 }
 

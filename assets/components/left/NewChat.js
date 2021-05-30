@@ -82,7 +82,7 @@ const NewChat = () => {
                                             <img className="avatar-sm" src={`${LOCALHOST}/assets/dist/img/avatars/${userSelected[0].avatar}`}
                                                  alt="avatar"/>
                                             <h5>{userSelected[0].firstName} {userSelected[0].lastName}</h5>
-                                            <button className="btn"><i className="material-icons">close</i></button>
+                                            <button className="btn" onClick={() => setUserSelected([])}><i className="material-icons">close</i></button>
                                         </div>
                                     }
                                 </div>
