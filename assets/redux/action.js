@@ -161,3 +161,16 @@ export const postMessages = (conversationId, content, bearer_token) => dispatch 
             return dispatch(addMessage(conversationId, response))
         })
 }
+
+export const fetchUsers = () => {
+    return fetch(LOCALHOST + '/api/users', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(response => {
+            return response['hydra:member']
+        })
+}

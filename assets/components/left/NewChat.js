@@ -1,10 +1,27 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {fetchUsers} from "../../redux/action";
 
 const NewChat = () => {
-    const [content, setContent] = useState('')
+    const [search, setSearch] = useState('')
+    const [display, setDisplay] = useState(false)
+    const [users, setUsers] = useState([]);
+    const [suggestion, setSuggestion] = useState([])
+
+    useEffect(() => {
+        fetchUsers().then(response => setUsers(response));
+    }, [])
     const handleChange = (e) => {
-        setContent(e.target.value)
+        setSearch(e.target.value)
+        let matches = []
+        if (search.length > 0) {
+            matches = users.filter(user => {
+                const regex = new RegExp(`${search}`, 'gi')
+                return user.firstName.match(regex)
+            })
+        }
+        console.log(matches)
     }
+
     return (
         <>
             <div className="modal fade" id="startnewchat" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -35,7 +52,7 @@ const NewChat = () => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
-                                    <textarea className="text-control" value={content} onChange={handleChange} id="message"
+                                    <textarea className="text-control" value={search} onChange={handleChange} id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
                                 <button type="submit" className="btn button w-100">Start New Chat</button>
