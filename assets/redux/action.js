@@ -162,8 +162,8 @@ export const postMessages = (conversationId, content, bearer_token) => dispatch 
         })
 }
 
-export const fetchUsers = () => {
-    return fetch(LOCALHOST + '/api/users', {
+export const fetchUsers = (search) => {
+    return fetch(LOCALHOST + '/api/users?firstName=' + search, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

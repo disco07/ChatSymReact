@@ -1,30 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {fetchUsers} from "../../redux/action";
+import {LOCALHOST} from "../../services/config";
 
 const NewChat = () => {
     const [search, setSearch] = useState('')
     const [content, setContent] = useState('')
     const [display, setDisplay] = useState(false)
     const [users, setUsers] = useState([]);
-    const [suggestion, setSuggestion] = useState([])
+    const [userSelected, setUserSelected] = useState([]);
 
-    useEffect(() => {
-        fetchUsers().then(response => setUsers(response));
-    }, [])
     const handleChange = (e) => {
         setSearch(e.target.value)
-        let matches = []
-        if (search.length > 0) {
-            matches = users.filter(user => {
-                const regex = new RegExp(`${search}`, 'gi')
-                return user.firstName.match(regex)
-            })
+        if (e.target.value.length > 1) {
+            fetchUsers(e.target.value).then(response => {
+                setUsers(response)
+                users.length > 0 ? setDisplay(true) : setDisplay(false)
+            });
+        }else {
+            setUsers([])
+            setDisplay(false)
         }
-        console.log(matches)
     }
 
     const handleChangeText = (e) => {
         setContent(e.target.value)
+    }
+    const selectUser = (idUser) => {
+        const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
+        setUserSelected(user[0])
     }
 
     return (
@@ -41,17 +44,30 @@ const NewChat = () => {
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="topic">User:</label>
-                                    <input type="text" value={search} onChange={handleChange} className="form-control"
+                                    <input type="text" value={search}
+                                           onChange={handleChange}
+                                           className="form-control"
                                            id="topic"
-                                           placeholder="What's the user"/>
+                                           placeholder="What's the user"
+                                           autoComplete="off"/>
                                     {
+                                        display &&
                                         <div className="autoContainer">
-                                            <div
-                                                className="option"
-                                                tabIndex="0">
-                                                <img className="avatar-sm" src={""} alt="avatar"/>
-                                                <h5>name</h5>
-                                            </div>
+                                            {
+                                                users.map(user => {
+                                                    return (
+                                                        <div className="option"
+                                                             key={user.id}
+                                                             onClick={() => selectUser(user.id)}
+                                                             tabIndex="0">
+                                                            <img className="avatar-sm"
+                                                                 src={`${LOCALHOST}/assets/dist/img/avatars/${user.avatar}`}
+                                                                 alt="avatar"/>
+                                                            <h5>{user.firstName} {user.lastName}</h5>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
                                         </div>
                                     }
                                 </div>

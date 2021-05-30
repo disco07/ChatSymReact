@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ApiResource(
  *     normalizationContext={"groups"={"read:user"}}
  * )
+ * @ApiFilter(SearchFilter::class, properties={"firstName": "partial"})
  * @UniqueEntity("email", message="L'utilisateur existe déjà !")
  */
 class User implements UserInterface
@@ -78,7 +81,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"read:message"})
+     * @Groups({"read:user", "read:message"})
      */
     private $avatar;
 

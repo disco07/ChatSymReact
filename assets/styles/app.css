@@ -2,8 +2,9 @@
     position: absolute;
     border-width: 0 1px 1px 1px;
     border-style: solid;
-    border-color: goldenrod;
-    background-color: whitesmoke;
+    border-radius: 2px;
+    box-shadow: 1px 1px 12px #bdbac2;
+    background-color: #fdfdfd;
     width: 370px;
     z-index: 10;
 }
