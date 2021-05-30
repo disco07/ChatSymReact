@@ -16,7 +16,7 @@ const NewChat = () => {
                 setUsers(response)
                 users.length > 0 ? setDisplay(true) : setDisplay(false)
             });
-        }else {
+        } else {
             setUsers([])
             setDisplay(false)
         }
@@ -27,7 +27,8 @@ const NewChat = () => {
     }
     const selectUser = (idUser) => {
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
-        setUserSelected(user[0])
+        setDisplay(false)
+        setUserSelected(user)
     }
 
     return (
@@ -74,13 +75,16 @@ const NewChat = () => {
                                 <div className="form-group">
                                     <label htmlFor="participant">Recipient:</label>
                                     <input type="text" className="form-control" id="participant"
-                                           placeholder="Add recipient..." required/>
-                                    <div className="user" id="recipient">
-                                        <img className="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg"
-                                             alt="avatar"/>
-                                        <h5>Keith Morris</h5>
-                                        <button className="btn"><i className="material-icons">close</i></button>
-                                    </div>
+                                           placeholder="Add recipient..."/>
+                                    {
+                                        userSelected.length > 0 &&
+                                        <div className="user" id="recipient">
+                                            <img className="avatar-sm" src={`${LOCALHOST}/assets/dist/img/avatars/${userSelected[0].avatar}`}
+                                                 alt="avatar"/>
+                                            <h5>{userSelected[0].firstName} {userSelected[0].lastName}</h5>
+                                            <button className="btn"><i className="material-icons">close</i></button>
+                                        </div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
