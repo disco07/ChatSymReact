@@ -20,7 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "method"="get",
  *              "path"="/allconversations",
  *              "controller"=App\Controller\ConversationApi::class,
- *       },
+ *          },
+ *          "post_conversation"={
+ *              "method"="post",
+ *              "path"="/newconversations",
+ *              "controller"=App\Controller\NewConversationApi::class,
+ *          },
  *          "post",
  * },
  *     itemOperations={

@@ -19,7 +19,6 @@ const NewChat = () => {
         } else {
             setUsers([])
             setDisplay(false)
-
         }
     }
 
