@@ -9,6 +9,7 @@ import store from "./redux/store";
 import AuthContext from "./contexts/AuthContext";
 import Services from "./services/Services"
 import PrivateRoute from "./components/PrivateRoute";
+import './styles/app.css';
 
 Services.setup()
 

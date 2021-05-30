@@ -41,23 +41,35 @@ const NewChat = () => {
                             <form>
                                 <div className="form-group">
                                     <label htmlFor="topic">User:</label>
-                                    <input type="text" value={search} onChange={handleChange} className="form-control" id="topic"
+                                    <input type="text" value={search} onChange={handleChange} className="form-control"
+                                           id="topic"
                                            placeholder="What's the user"/>
+                                    {
+                                        <div className="autoContainer">
+                                            <div
+                                                className="option"
+                                                tabIndex="0">
+                                                <img className="avatar-sm" src={""} alt="avatar"/>
+                                                <h5>name</h5>
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="participant">Recipient:</label>
                                     <input type="text" className="form-control" id="participant"
-                                           placeholder="Add recipient..." required />
-                                        <div className="user" id="recipient">
-                                            <img className="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg"
-                                                 alt="avatar" />
-                                                <h5>Keith Morris</h5>
-                                                <button className="btn"><i className="material-icons">close</i></button>
-                                        </div>
+                                           placeholder="Add recipient..." required/>
+                                    <div className="user" id="recipient">
+                                        <img className="avatar-sm" src="dist/img/avatars/avatar-female-5.jpg"
+                                             alt="avatar"/>
+                                        <h5>Keith Morris</h5>
+                                        <button className="btn"><i className="material-icons">close</i></button>
+                                    </div>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
-                                    <textarea className="text-control" value={content} onChange={handleChangeText} id="message"
+                                    <textarea className="text-control" value={content} onChange={handleChangeText}
+                                              id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
                                 <button type="submit" className="btn button w-100">Start New Chat</button>

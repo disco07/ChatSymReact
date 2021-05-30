@@ -1,3 +1,23 @@
-body {
-    background-color: lightgray;
+.autoContainer {
+    position: absolute;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: goldenrod;
+    background-color: whitesmoke;
+    width: 370px;
+    z-index: 10;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    width: 370px;
+    padding: 5px;
+}
+
+.option,
+h5 {
+    margin-left: 10px;
+    font-size: 18px;
+    text-transform: capitalize;
 }
