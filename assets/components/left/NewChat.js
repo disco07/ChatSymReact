@@ -3,6 +3,7 @@ import {fetchUsers} from "../../redux/action";
 
 const NewChat = () => {
     const [search, setSearch] = useState('')
+    const [content, setContent] = useState('')
     const [display, setDisplay] = useState(false)
     const [users, setUsers] = useState([]);
     const [suggestion, setSuggestion] = useState([])
@@ -22,6 +23,10 @@ const NewChat = () => {
         console.log(matches)
     }
 
+    const handleChangeText = (e) => {
+        setContent(e.target.value)
+    }
+
     return (
         <>
             <div className="modal fade" id="startnewchat" tabIndex="-1" role="dialog" aria-hidden="true">
@@ -35,6 +40,11 @@ const NewChat = () => {
                         <div className="content">
                             <form>
                                 <div className="form-group">
+                                    <label htmlFor="topic">User:</label>
+                                    <input type="text" value={search} onChange={handleChange} className="form-control" id="topic"
+                                           placeholder="What's the user"/>
+                                </div>
+                                <div className="form-group">
                                     <label htmlFor="participant">Recipient:</label>
                                     <input type="text" className="form-control" id="participant"
                                            placeholder="Add recipient..." required />
@@ -46,13 +56,8 @@ const NewChat = () => {
                                         </div>
                                 </div>
                                 <div className="form-group">
-                                    <label htmlFor="topic">Topic:</label>
-                                    <input type="text" className="form-control" id="topic"
-                                           placeholder="What's the topic?" required />
-                                </div>
-                                <div className="form-group">
                                     <label htmlFor="message">Message:</label>
-                                    <textarea className="text-control" value={search} onChange={handleChange} id="message"
+                                    <textarea className="text-control" value={content} onChange={handleChangeText} id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
                                 <button type="submit" className="btn button w-100">Start New Chat</button>
