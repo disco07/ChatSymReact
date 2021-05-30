@@ -174,3 +174,23 @@ export const fetchUsers = (search) => {
             return response['hydra:member']
         })
 }
+
+export const postConversations = (user, bearer_token) => dispatch => {
+    return fetch(LOCALHOST + '/api/newconversations?users=' + user, {
+        method: 'POST',
+        headers: {
+            'Authorization': bearer(bearer_token),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: content
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(response => {
+            dispatch(setLastMessage(conversationId, response))
+            return dispatch(addMessage(conversationId, response))
+        })
+}
