@@ -1,6 +1,8 @@
-import React, {useState} from 'react';
-import {fetchUsers, postConversations} from "../../redux/action";
+import React, {useContext, useState} from 'react';
+import {fetchUsers, postConversations, postMessages} from "../../redux/action";
 import {LOCALHOST} from "../../services/config";
+import {useDispatch} from "react-redux";
+import SocketContext from "../../contexts/SocketContext";
 
 const NewChat = () => {
     const [search, setSearch] = useState('')
@@ -8,6 +10,9 @@ const NewChat = () => {
     const [display, setDisplay] = useState(false)
     const [users, setUsers] = useState([]);
     const [userSelected, setUserSelected] = useState([]);
+    const [conversations, setConversations] = useState([]);
+    const dispatch = useDispatch()
+    const {socket} = useContext(SocketContext)
 
     const handleChange = (e) => {
         setSearch(e.target.value)
@@ -29,7 +34,24 @@ const NewChat = () => {
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
         setUserSelected(user)
-        postConversations(idUser, window.localStorage.getItem('authToken'))
+        postConversations(idUser, window.localStorage.getItem('authToken')).then(response => setConversations(response))
+    }
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        dispatch(postMessages(conversations[0].conversationId, content, localStorage.getItem('authToken')))
+            .then(response => {
+                socket.emit('sendMessage', {
+                    "conversationId": response.conversationId,
+                    "content": response.data.content,
+                    "createdAt": response.data.createdAt,
+                    "id": response.data.id,
+                    // "images": response.data.images,
+                    "users": response.data.users.id,
+                    "totalUnread": 1,
+                }, userSelected[0].id)
+
+            })
+        setContent('')
     }
 
     return (
@@ -89,11 +111,15 @@ const NewChat = () => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
-                                    <textarea className="text-control" value={content} onChange={handleChangeText}
+                                    <textarea className="text-control"
+                                              value={content}
+                                              onChange={handleChangeText}
                                               id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
-                                <button type="submit" className="btn button w-100">Start New Chat</button>
+                                <button type="submit"
+                                        className="btn button w-100"
+                                        onClick={handleSendMessage}>Start New Chat</button>
                             </form>
                         </div>
                     </div>
