@@ -102,10 +102,12 @@ const NewChat = () => {
                                     {
                                         userSelected.length > 0 &&
                                         <div className="user" id="recipient">
-                                            <img className="avatar-sm" src={`${LOCALHOST}/assets/dist/img/avatars/${userSelected[0].avatar}`}
+                                            <img className="avatar-sm"
+                                                 src={`${LOCALHOST}/assets/dist/img/avatars/${userSelected[0].avatar}`}
                                                  alt="avatar"/>
                                             <h5>{userSelected[0].firstName} {userSelected[0].lastName}</h5>
-                                            <button className="btn" onClick={() => setUserSelected([])}><i className="material-icons">close</i></button>
+                                            <button className="btn" onClick={() => setUserSelected([])}><i
+                                                className="material-icons">close</i></button>
                                         </div>
                                     }
                                 </div>
@@ -119,7 +121,8 @@ const NewChat = () => {
                                 </div>
                                 <button type="submit"
                                         className="btn button w-100"
-                                        onClick={handleSendMessage}>Start New Chat</button>
+                                        onClick={handleSendMessage}>Start New Chat
+                                </button>
                             </form>
                         </div>
                     </div>

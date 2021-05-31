@@ -39,6 +39,80 @@ class ConversationsRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findConversationsByUser(int $otherUserId, int $myId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->select($qb->expr()->count('p.conversation'))
+            ->innerJoin('c.participants', 'p')
+            ->where(
+                $qb->expr()->orX(
+                    $qb->expr()->eq('p.user', ':me'),
+                    $qb->expr()->eq('p.user', ':otherUser')
+                )
+            )
+            ->groupBy('p.conversation')
+            ->having(
+                $qb->expr()->eq(
+                    $qb->expr()->count('p.conversation'),
+                    2
+                )
+            )
+            ->setParameters([
+                'me' => $myId,
+                'otherUser' => $otherUserId
+            ])
+        ;
+
+        if( count($qb->getQuery()->getResult())){
+            $qb = $this->createQueryBuilder('c');
+            $qb
+                ->select('c.id')
+                ->innerJoin('c.participants', 'p')
+                ->where(
+                    $qb->expr()->orX(
+                        $qb->expr()->eq('p.user', ':me'),
+                        $qb->expr()->eq('p.user', ':otherUser')
+                    )
+                )
+                ->groupBy('p.conversation')
+                ->having(
+                    $qb->expr()->eq(
+                        $qb->expr()->count('p.conversation'),
+                        2
+                    )
+                )
+                ->setParameters([
+                    'me' => $myId,
+                    'otherUser' => $otherUserId
+                ])
+            ;
+            return $qb->getQuery()->getResult();
+        }
+        else{
+            return $qb->getQuery()->getResult();
+        }
+    }
+
+
+    public function checkIfUserisParticipant(int $conversationId, int $userId)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb
+            ->innerJoin('c.participants', 'p')
+            ->where('c.id = :conversationId')
+            ->andWhere(
+                $qb->expr()->eq('p.user', ':userId')
+            )
+            ->setParameters([
+                'conversationId' => $conversationId,
+                'userId' => $userId
+            ])
+        ;
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     // /**
     //  * @return Conversation[] Returns an array of Conversation objects
     //  */
