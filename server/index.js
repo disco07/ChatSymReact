@@ -1,5 +1,5 @@
 const express = require('express');
-const socketio = require('socket.io');
+const socketIo = require('socket.io');
 const http = require('http');
 
 const { addUser, removeUser, getUsers } = require('./users');
@@ -8,11 +8,13 @@ const router = require('./router');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server, {
+const io = socketIo(server, {
     cors: {
         origin: '*',
     }
 });
+
+app.use(router);
 
 io.on('connection', (socket) => {
     const users = getUsers()
@@ -48,6 +50,5 @@ io.on('connection', (socket) => {
     })
 })
 
-app.use(router);
 
 server.listen(PORT, () => console.log(`Le serveur a démarré sur le port ${PORT}`))
