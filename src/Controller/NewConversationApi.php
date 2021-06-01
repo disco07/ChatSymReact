@@ -55,7 +55,6 @@ class NewConversationApi
             $this->security->getUser()->getId()
         );
 
-
         if (!count($conversation)) {
             $participantMe = new Participants();
             $participantOther = new Participants();
