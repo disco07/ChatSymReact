@@ -55,7 +55,9 @@ class NewConversationApi
             $this->security->getUser()->getId()
         );
 
-        dd($conversation[0]);
+        if (count($conversation)) {
+            return $this->conversationRepository->find($conversation[0]['conversationId']);
+        }
 
         $participantMe = new Participants();
         $participantOther = new Participants();

@@ -67,7 +67,7 @@ class ConversationsRepository extends ServiceEntityRepository
         if( count($qb->getQuery()->getResult())){
             $qb = $this->createQueryBuilder('c');
             $qb
-                ->select('c.id')
+                ->select('c.id as conversationId')
                 ->innerJoin('c.participants', 'p')
                 ->where(
                     $qb->expr()->orX(
