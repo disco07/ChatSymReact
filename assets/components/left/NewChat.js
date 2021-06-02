@@ -16,7 +16,7 @@ const NewChat = () => {
 
     const handleChange = (e) => {
         setSearch(e.target.value)
-        if (e.target.value.length > 1) {
+        if (e.target.value.length > 0) {
             fetchUsers(e.target.value).then(response => {
                 setUsers(response)
                 users.length > 0 ? setDisplay(true) : setDisplay(false)
@@ -31,10 +31,11 @@ const NewChat = () => {
         setContent(e.target.value)
     }
     const selectUser = (idUser) => {
+        console.log(idUser)
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
         setUserSelected(user)
-        postConversations(idUser, window.localStorage.getItem('authToken')).then(response => setConversations(response))
+        postConversations(idUser, window.localStorage.getItem('authToken')).then(response => console.log(response))
     }
     const handleSendMessage = (e) => {
         e.preventDefault();

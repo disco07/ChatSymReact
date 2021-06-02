@@ -1,20 +1,29 @@
 const express = require('express');
 const socketIo = require('socket.io');
 const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const path = require('path');
+const cors = require('cors')
 
 const { addUser, removeUser, getUsers } = require('./users');
 const PORT = process.env.PORT || 5000;
+const PORTSSL = process.env.PORT || 15000;
 const router = require('./router');
 
 const app = express();
 const server = http.createServer(app);
+const sslServer = https.createServer({
+    key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem')),
+}, app);
+app.use(router);
+app.use(cors());
 const io = socketIo(server, {
     cors: {
         origin: '*',
     }
 });
-
-app.use(router);
 
 io.on('connection', (socket) => {
     const users = getUsers()
@@ -52,3 +61,4 @@ io.on('connection', (socket) => {
 
 
 server.listen(PORT, () => console.log(`Le serveur a démarré sur le port ${PORT}`))
+sslServer.listen(PORTSSL, () => console.log(`Le serveur a démarré sur le port ${PORTSSL}`))

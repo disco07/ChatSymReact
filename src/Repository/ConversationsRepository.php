@@ -47,8 +47,8 @@ class ConversationsRepository extends ServiceEntityRepository
             ->innerJoin('c.participants', 'p')
             ->where(
                 $qb->expr()->orX(
-                    $qb->expr()->eq('p.user', ':me'),
-                    $qb->expr()->eq('p.user', ':otherUser')
+                    $qb->expr()->eq('p.users', ':me'),
+                    $qb->expr()->eq('p.users', ':otherUser')
                 )
             )
             ->groupBy('p.conversation')
@@ -71,8 +71,8 @@ class ConversationsRepository extends ServiceEntityRepository
                 ->innerJoin('c.participants', 'p')
                 ->where(
                     $qb->expr()->orX(
-                        $qb->expr()->eq('p.user', ':me'),
-                        $qb->expr()->eq('p.user', ':otherUser')
+                        $qb->expr()->eq('p.users', ':me'),
+                        $qb->expr()->eq('p.users', ':otherUser')
                     )
                 )
                 ->groupBy('p.conversation')
@@ -102,7 +102,7 @@ class ConversationsRepository extends ServiceEntityRepository
             ->innerJoin('c.participants', 'p')
             ->where('c.id = :conversationId')
             ->andWhere(
-                $qb->expr()->eq('p.user', ':userId')
+                $qb->expr()->eq('p.users', ':userId')
             )
             ->setParameters([
                 'conversationId' => $conversationId,

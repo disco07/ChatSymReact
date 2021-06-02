@@ -175,7 +175,7 @@ export const fetchUsers = (search) => {
         })
 }
 
-export const postConversations = (user, bearer_token) => dispatch => {
+export const postConversations = (user, bearer_token) => {
     return fetch(LOCALHOST + '/api/newconversations?users=' + user, {
         method: 'POST',
         headers: {

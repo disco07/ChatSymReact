@@ -55,23 +55,22 @@ class NewConversationApi
             $this->security->getUser()->getId()
         );
 
-        if (!count($conversation)) {
-            $participantMe = new Participants();
-            $participantOther = new Participants();
-            $participantOther->setUsers($otherUser);
-            $participantMe->setUsers($this->security->getUser());
-            $participantOther->setConversation($data);
-            $participantMe->setConversation($data);
+        dd($conversation[0]);
 
-            $this->entityManager->getConnection()->beginTransaction();
-            $this->entityManager->persist($data);
-            $this->entityManager->persist($participantMe);
-            $this->entityManager->persist($participantOther);
-            $this->entityManager->commit();
+        $participantMe = new Participants();
+        $participantOther = new Participants();
+        $participantOther->setUsers($otherUser);
+        $participantMe->setUsers($this->security->getUser());
+        $participantOther->setConversation($data);
+        $participantMe->setConversation($data);
 
-            $this->entityManager->flush();
-            return $data;
-        }
-        return null;
+        $this->entityManager->getConnection()->beginTransaction();
+        $this->entityManager->persist($data);
+        $this->entityManager->persist($participantMe);
+        $this->entityManager->persist($participantOther);
+        $this->entityManager->commit();
+
+        $this->entityManager->flush();
+        return $data;
     }
 }
