@@ -11,6 +11,7 @@ const NewChat = () => {
     const [users, setUsers] = useState([]);
     const [userSelected, setUserSelected] = useState([]);
     const [conversations, setConversations] = useState([]);
+    const [error, setError] = useState('');
     const dispatch = useDispatch()
     const {socket} = useContext(SocketContext)
 
@@ -35,11 +36,19 @@ const NewChat = () => {
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
         setUserSelected(user)
-        postConversations(idUser, window.localStorage.getItem('authToken')).then(response => console.log(response))
+        postConversations(idUser, window.localStorage.getItem('authToken'))
+            .then(response => {
+                if (response['@type'] === "hydra:Error") {
+                    return setError(response['hydra:description'])
+                }else {
+                    setError('')
+                    return setConversations(response)
+                }
+            })
     }
     const handleSendMessage = (e) => {
         e.preventDefault();
-        dispatch(postMessages(conversations[0].conversationId, content, localStorage.getItem('authToken')))
+        dispatch(postMessages(conversations?.conversationId | conversations?.id, content, localStorage.getItem('authToken')))
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,
@@ -98,7 +107,7 @@ const NewChat = () => {
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="participant">Recipient:</label>
-                                    <input type="text" className="form-control" id="participant"
+                                    <input type="text" className={"form-control" + (error && " is-invalid")} id="participant"
                                            placeholder="Add recipient..."/>
                                     {
                                         userSelected.length > 0 &&
@@ -111,6 +120,7 @@ const NewChat = () => {
                                                 className="material-icons">close</i></button>
                                         </div>
                                     }
+                                    {error && <p className="invalid-feedback">{error}</p>}
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="message">Message:</label>
@@ -120,10 +130,12 @@ const NewChat = () => {
                                               id="message"
                                               placeholder="Send your welcome message...">Hmm, are you friendly?</textarea>
                                 </div>
-                                <button type="submit"
-                                        className="btn button w-100"
-                                        onClick={handleSendMessage}>Start New Chat
-                                </button>
+                                {
+                                    <button type="submit"
+                                         className={"btn button w-100" + ((error && content === '') && " disabled")}
+                                         onClick={handleSendMessage}>Start New Chat
+                                    </button>
+                                }
                             </form>
                         </div>
                     </div>
