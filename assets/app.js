@@ -10,10 +10,15 @@ import AuthContext from "./contexts/AuthContext";
 import Services from "./services/Services"
 import PrivateRoute from "./components/PrivateRoute";
 import './styles/app.css';
+import io from "socket.io-client";
+import SocketContext from "./contexts/SocketContext";
+import {ENDPOINT} from "./services/config";
 
 Services.setup()
+let socketIO = io(ENDPOINT)
 
 const App = () => {
+    const [socket, setSocket] = useState(socketIO)
     const [isAuthenticated, setIsAuthenticated] = useState(Services.isAuthenticated);
     return (
         <Provider store={store}>
@@ -21,15 +26,20 @@ const App = () => {
                 isAuthenticated,
                 setIsAuthenticated
             }}>
-                <HashRouter>
-                    <main>
-                        <Switch>
-                            <PrivateRoute path="/conversation" component={ChatPage}/>
-                            <Route path="/register" component={RegisterPage}/>
-                            <Route path="/" component={LoginPage}/>
-                        </Switch>
-                    </main>
-                </HashRouter>
+                <SocketContext.Provider value={{
+                    socket,
+                    setSocket
+                }}>
+                    <HashRouter>
+                        <main>
+                            <Switch>
+                                <PrivateRoute path="/conversation" component={ChatPage}/>
+                                <Route path="/register" component={RegisterPage}/>
+                                <Route path="/" component={LoginPage}/>
+                            </Switch>
+                        </main>
+                    </HashRouter>
+                </SocketContext.Provider>
             </AuthContext.Provider>
         </Provider>
     );
