@@ -35,13 +35,13 @@ const NewChat = () => {
         console.log(idUser)
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
-        setUserSelected(user)
         postConversations(idUser, window.localStorage.getItem('authToken'))
             .then(response => {
                 if (response['@type'] === "hydra:Error") {
                     return setError(response['hydra:description'])
                 }else {
                     setError('')
+                    setUserSelected(user)
                     return setConversations(response)
                 }
             })
