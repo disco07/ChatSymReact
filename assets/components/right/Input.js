@@ -25,7 +25,6 @@ const Input = ({conversationId, otherUser}) => {
                     "users": response.data.users.id,
                     "totalUnread": 1,
                 }, otherUser)
-
             })
         setContent('')
     }
