@@ -62,16 +62,16 @@ const conversations = (state = initialState, action) => {
             }
         case ADD_CONVERSATION:
             const newConversations = state.items.map(conversation => {
-                return parseInt(conversation.conversationId) !== parseInt(action.data.conversationId)
+                return parseInt(conversation?.conversationId) !== parseInt(action.data.conversationId)
                     ?
                     (
-                        [state.items, action.data]
+                        [...state.items, action.data]
                     )
                     : state.items;
             });
             return {
                 ...state,
-                items: [...newConversations]
+                items: [...state.items, action.data]
             }
         case SET_LAST_MESSAGE:
             const _newConversationsWithLastMessage = state.items.map(conversation => {

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {fetchUsers, postConversations, postMessages} from "../../redux/action";
+import {addConversation, fetchUsers, postConversations, postMessages} from "../../redux/action";
 import {LOCALHOST} from "../../services/config";
 import {useDispatch} from "react-redux";
 import SocketContext from "../../contexts/SocketContext";
@@ -11,16 +11,6 @@ const NewChat = () => {
     const [users, setUsers] = useState([]);
     const [userSelected, setUserSelected] = useState([]);
     const [conversations, setConversations] = useState([]);
-    const [conversation, setConversation] = useState({
-        conv: "",
-        id:"",
-        firstName: "",
-        lastName: "",
-        avatar: "",
-        content: "",
-        createdAt: "",
-        conversationId: "",
-    });
     const [error, setError] = useState('');
     const dispatch = useDispatch()
     const {socket} = useContext(SocketContext)
@@ -46,7 +36,6 @@ const NewChat = () => {
         setDisplay(false)
         postConversations(idUser, window.localStorage.getItem('authToken'))
             .then(response => {
-                console.log(response)
                 if (response['@type'] === "hydra:Error") {
                     return setError(response['hydra:description'])
                 }else {
@@ -58,7 +47,7 @@ const NewChat = () => {
     }
     const handleSendMessage = (e) => {
         e.preventDefault();
-        dispatch(postMessages(conversations?.conversationId | conversations?.id, content, localStorage.getItem('authToken')))
+        dispatch(postMessages(conversations?.id, content, localStorage.getItem('authToken')))
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,
@@ -69,7 +58,16 @@ const NewChat = () => {
                     "users": response.data.users.id,
                     "totalUnread": 1,
                 }, userSelected[0].id)
-
+                dispatch(addConversation({
+                    conv: conversations,
+                    id: userSelected[0].id,
+                    firstName: userSelected[0].firstName,
+                    lastName: userSelected[0].lastName,
+                    avatar: userSelected[0].avatar,
+                    content: response.data.content,
+                    createdAt: response.data.createdAt,
+                    conversationId: response.conversationId,
+                }))
             })
         setContent('')
     }
