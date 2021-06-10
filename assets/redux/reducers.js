@@ -1,4 +1,5 @@
 import {
+    ADD_CONVERSATION,
     ADD_MESSAGE,
     CONVERSATION_LOAD,
     GET_CONVERSATION,
@@ -58,6 +59,19 @@ const conversations = (state = initialState, action) => {
             return {
                 ...state,
                 items: [..._newItemsFinal]
+            }
+        case ADD_CONVERSATION:
+            const newConversations = state.items.map(conversation => {
+                return parseInt(conversation.conversationId) !== parseInt(action.data.conversationId)
+                    ?
+                    (
+                        [state.items, action.data]
+                    )
+                    : state.items;
+            });
+            return {
+                ...state,
+                items: [...newConversations]
             }
         case SET_LAST_MESSAGE:
             const _newConversationsWithLastMessage = state.items.map(conversation => {

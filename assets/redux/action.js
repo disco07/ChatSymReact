@@ -1,4 +1,5 @@
 import {
+    ADD_CONVERSATION,
     ADD_MESSAGE,
     CONVERSATION_ERROR,
     CONVERSATION_LOAD,
@@ -25,6 +26,22 @@ export const errorLogin = (data) => {
 export const loadConversation = () => {
     return {
         type: CONVERSATION_LOAD,
+    }
+}
+
+export const addConversation = (data) => {
+    return {
+        type: ADD_CONVERSATION,
+        data: {
+            conv: data.conv,
+            id: data.id,
+            firstName: data.firstName,
+            lastName: data.lastName,
+            avatar: data.avatar,
+            content: data.content,
+            createdAt: data.createdAt,
+            conversationId: data.conversationId,
+        }
     }
 }
 

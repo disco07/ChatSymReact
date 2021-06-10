@@ -11,6 +11,16 @@ const NewChat = () => {
     const [users, setUsers] = useState([]);
     const [userSelected, setUserSelected] = useState([]);
     const [conversations, setConversations] = useState([]);
+    const [conversation, setConversation] = useState({
+        conv: "",
+        id:"",
+        firstName: "",
+        lastName: "",
+        avatar: "",
+        content: "",
+        createdAt: "",
+        conversationId: "",
+    });
     const [error, setError] = useState('');
     const dispatch = useDispatch()
     const {socket} = useContext(SocketContext)
@@ -32,11 +42,11 @@ const NewChat = () => {
         setContent(e.target.value)
     }
     const selectUser = (idUser) => {
-        console.log(idUser)
         const user = users.filter(user => parseInt(user.id) === parseInt(idUser))
         setDisplay(false)
         postConversations(idUser, window.localStorage.getItem('authToken'))
             .then(response => {
+                console.log(response)
                 if (response['@type'] === "hydra:Error") {
                     return setError(response['hydra:description'])
                 }else {
