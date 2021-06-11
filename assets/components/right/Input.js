@@ -14,7 +14,7 @@ const Input = ({conversationId, otherUser}) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(postMessages(conversationId, content, localStorage.getItem('authToken')))
+        dispatch(postMessages(conversationId, content, false, localStorage.getItem('authToken')))
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,

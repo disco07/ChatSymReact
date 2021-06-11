@@ -47,7 +47,7 @@ const NewChat = () => {
     }
     const handleSendMessage = (e) => {
         e.preventDefault();
-        dispatch(postMessages(conversations?.id, content, localStorage.getItem('authToken')))
+        dispatch(postMessages(conversations?.id, content, true, localStorage.getItem('authToken')))
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,

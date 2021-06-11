@@ -160,7 +160,7 @@ export const fetchMessage = (conversationId, bearer_token) => dispatch => {
         })
 }
 
-export const postMessages = (conversationId, content, bearer_token) => dispatch => {
+export const postMessages = (conversationId, content, newConversation, bearer_token) => dispatch => {
     return fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
         method: 'POST',
         headers: {
@@ -175,8 +175,11 @@ export const postMessages = (conversationId, content, bearer_token) => dispatch 
             return response.json()
         })
         .then(response => {
-            dispatch(setLastMessage(conversationId, response))
-            return dispatch(addMessage(conversationId, response))
+            if (newConversation === false) {
+                dispatch(setLastMessage(conversationId, response))
+                return dispatch(addMessage(conversationId, response))
+            }
+            return response
         })
 }
 
