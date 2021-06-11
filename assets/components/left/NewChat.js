@@ -66,7 +66,7 @@ const NewChat = () => {
                     content: response.content,
                     createdAt: response.createdAt,
                     conversationId: conversations?.id,
-                }))
+                }, response.id))
             })
         setContent('')
     }

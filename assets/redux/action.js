@@ -29,7 +29,7 @@ export const loadConversation = () => {
     }
 }
 
-export const addConversation = (data) => {
+export const addConversation = (data, contentId) => {
     return {
         type: ADD_CONVERSATION,
         data: {
@@ -41,7 +41,8 @@ export const addConversation = (data) => {
             content: data.content,
             createdAt: data.createdAt,
             conversationId: data.conversationId,
-        }
+        },
+        contentId
     }
 }
 

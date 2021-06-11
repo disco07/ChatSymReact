@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {postMessages} from "../../redux/action";
+import {addConversation, postMessages} from "../../redux/action";
 import SocketContext from "../../contexts/SocketContext";
 
 const Input = ({conversationId, otherUser}) => {
@@ -25,6 +25,16 @@ const Input = ({conversationId, otherUser}) => {
                     "users": response.data.users.id,
                     "totalUnread": 1,
                 }, otherUser)
+                dispatch(addConversation({
+                    conv: conversations,
+                    id: otherUser,
+                    firstName: userSelected[0].firstName,
+                    lastName: userSelected[0].lastName,
+                    avatar: userSelected[0].avatar,
+                    content: response.data.content,
+                    createdAt: response.data.createdAt,
+                    conversationId: conversationId,
+                }, response.data.id))
             })
         setContent('')
     }

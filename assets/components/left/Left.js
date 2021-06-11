@@ -51,10 +51,10 @@ const Left = ({conversations}) => {
                                     <div className="list-group" id="chats" role="tablist">
                                         {
                                             conversations.items
-                                                .sort((a, b) => moment(a.createdAt).format('MMMM Do YYYY, h:mm:ss a') <
-                                                    moment(b.createdAt).format('MMMM Do YYYY, h:mm:ss a'))
+                                                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                                                 .map((conversation, index) => {
-                                                return <Conversation key={index} totalUnread={unread} conversationId={conversationId} conversation={conversation}/>
+                                                    if (conversation.conv.lastMessage !== null)
+                                                        return <Conversation key={index} totalUnread={unread} conversationId={conversationId} conversation={conversation}/>
                                             })
                                         }
                                     </div>
