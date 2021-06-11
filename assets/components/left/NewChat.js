@@ -49,13 +49,13 @@ const NewChat = () => {
         e.preventDefault();
         dispatch(postMessages(conversations?.id, content, true, localStorage.getItem('authToken')))
             .then(response => {
+                console.log(response)
                 socket.emit('sendMessage', {
-                    "conversationId": response.conversationId,
-                    "content": response.data.content,
-                    "createdAt": response.data.createdAt,
-                    "id": response.data.id,
-                    // "images": response.data.images,
-                    "users": response.data.users.id,
+                    "conversationId": conversations?.id,
+                    "content": response.content,
+                    "createdAt": response.createdAt,
+                    "id": response.id,
+                    "users": response.users.id,
                     "totalUnread": 1,
                 }, userSelected[0].id)
                 dispatch(addConversation({
@@ -64,9 +64,9 @@ const NewChat = () => {
                     firstName: userSelected[0].firstName,
                     lastName: userSelected[0].lastName,
                     avatar: userSelected[0].avatar,
-                    content: response.data.content,
-                    createdAt: response.data.createdAt,
-                    conversationId: response.conversationId,
+                    content: response.content,
+                    createdAt: response.createdAt,
+                    conversationId: conversations?.id,
                 }))
             })
         setContent('')

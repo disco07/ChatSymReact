@@ -179,6 +179,7 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
                 dispatch(setLastMessage(conversationId, response))
                 return dispatch(addMessage(conversationId, response))
             }
+            dispatch(setLastMessage(conversationId, response))
             return response
         })
 }
