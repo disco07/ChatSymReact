@@ -18,11 +18,12 @@ const Input = ({conversationId, otherUser}) => {
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": response.conversationId,
+                    "avatar": response.data.users.avatar,
                     "content": response.data.content,
                     "createdAt": response.data.createdAt,
                     "id": response.data.id,
                     // "images": response.data.images,
-                    "users": response.data.users.id,
+                    "users": response.data.users,
                     "totalUnread": 1,
                 }, otherUser)
             })

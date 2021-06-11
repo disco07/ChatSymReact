@@ -27,8 +27,9 @@ const Right = ({conversationId, user, otherUser}) => {
     }, [])
 
     useEffect(() => {
-        socket.on('newMessage', response => {
-            addMessage(conversationId, response)
+        socket.on('newMessages', response => {
+            console.log(response)
+            dispatch(addMessage(conversationId, response))
         });
     }, [conversationId])
 

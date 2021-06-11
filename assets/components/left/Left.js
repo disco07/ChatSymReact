@@ -1,18 +1,18 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Conversation from "./Conversation";
-import moment from "moment";
 import SocketContext from "../../contexts/SocketContext";
 import {setLastMessage} from "../../redux/action";
+import {useDispatch} from "react-redux";
 
 const Left = ({conversations}) => {
     const [unread, setUnread] = useState(0)
     const [conversationId, setConversationId] = useState(0)
     const {socket} = useContext(SocketContext)
+    const dispatch = useDispatch()
 
     useEffect(() => {
-        socket.on('newMessage', response => {
-            console.log(response)
-            setLastMessage(response.conversationId, response);
+        socket.on('newMessages', response => {
+            dispatch(setLastMessage(response.conversationId, response));
             setUnread(response.totalUnread);
             setConversationId(response.conversationId);
         });

@@ -6,6 +6,10 @@ const logout = () => {
 
 const setup = () => {
     const authToken = window.localStorage.getItem('authToken')
+    if (authToken === undefined) {
+        console.log(authToken)
+        logout()
+    }
     if (authToken) {
         const {exp: expiration} = jwtDecode(authToken)
         if (expiration * 1000 < new Date().getTime()) {

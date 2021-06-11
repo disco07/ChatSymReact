@@ -27,7 +27,6 @@ const NewChat = () => {
             setDisplay(false)
         }
     }
-
     const handleChangeText = (e) => {
         setContent(e.target.value)
     }
@@ -51,6 +50,7 @@ const NewChat = () => {
             .then(response => {
                 socket.emit('sendMessage', {
                     "conversationId": conversations?.id,
+                    "avatar": userSelected[0].avatar,
                     "content": response.content,
                     "createdAt": response.createdAt,
                     "id": response.id,

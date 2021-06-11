@@ -7,7 +7,7 @@ const path = require('path');
 const cors = require('cors')
 
 const { addUser, removeUser, getUsers } = require('./users');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 55000;
 const PORTSSL = process.env.PORT || 15000;
 const router = require('./router');
 
@@ -39,14 +39,14 @@ io.on('connection', (socket) => {
 
     socket.on('sendMessage', (data, userId) => {
         console.log(data, userId)
-        io.to(userId).emit('newMessage', data);
+        io.to(parseInt(userId)).emit('newMessages', data);
     });
 
     socket.on('startTyping', (userId, conversationId) => {
-        socket.to(userId).emit('userStartTyping', true, conversationId)
+        socket.to(parseInt(userId)).emit('userStartTyping', true, conversationId)
     })
     socket.on('stopTyping', (userId, conversationId) => {
-        socket.to(userId).emit('userStopTyping', false, conversationId)
+        socket.to(parseInt(userId)).emit('userStopTyping', false, conversationId)
     })
 
     socket.on('disconnect', () => {

@@ -13,6 +13,9 @@ import SocketContext from "../contexts/SocketContext";
 const ChatPage = () => {
 
     const {socket} = useContext(SocketContext)
+    useEffect(() => {
+        socket.on('message', response => console.log(response))
+    }, [])
     const dispatch = useDispatch()
     const conversations = useSelector(state => state.conversations)
     useEffect(() => {
