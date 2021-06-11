@@ -54,7 +54,7 @@ const NewChat = () => {
                     "content": response.content,
                     "createdAt": response.createdAt,
                     "id": response.id,
-                    "users": response.users.id,
+                    "users": response.users,
                     "totalUnread": 1,
                 }, userSelected[0].id)
                 dispatch(addConversation({
@@ -67,6 +67,16 @@ const NewChat = () => {
                     createdAt: response.createdAt,
                     conversationId: conversations?.id,
                 }, response.id))
+                socket.emit('sendConversation', {
+                    conv: conversations,
+                    id: userSelected[0].id,
+                    firstName: userSelected[0].firstName,
+                    lastName: userSelected[0].lastName,
+                    avatar: userSelected[0].avatar,
+                    content: response.content,
+                    createdAt: response.createdAt,
+                    conversationId: conversations?.id,
+                }, userSelected[0].id, response.id)
             })
         setContent('')
     }

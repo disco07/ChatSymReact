@@ -38,8 +38,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendMessage', (data, userId) => {
-        console.log(data, userId)
         io.to(parseInt(userId)).emit('newMessages', data);
+    });
+
+    socket.on('sendConversation', (data, userId, contentId) => {
+        io.to(parseInt(userId)).emit('newConversation', data, contentId);
     });
 
     socket.on('startTyping', (userId, conversationId) => {

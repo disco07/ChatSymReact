@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Conversation from "./Conversation";
 import SocketContext from "../../contexts/SocketContext";
-import {setLastMessage} from "../../redux/action";
+import {addConversation, setLastMessage} from "../../redux/action";
 import {useDispatch} from "react-redux";
 
 const Left = ({conversations}) => {
@@ -18,6 +18,9 @@ const Left = ({conversations}) => {
         });
     }, [conversationId]);
 
+    useEffect(() => {
+        socket.on('newConversation', (conversation, contentId) => dispatch(addConversation(conversation, contentId)));
+    }, [])
     return (
         <>
             <div className="sidebar" id="sidebar">

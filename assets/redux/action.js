@@ -180,6 +180,7 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
                 return dispatch(addMessage(conversationId, response))
             }
             dispatch(setLastMessage(conversationId, response))
+            dispatch(addMessage(conversationId, response))
             return response
         })
 }
