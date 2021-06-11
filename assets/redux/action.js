@@ -30,7 +30,6 @@ export const loadConversation = () => {
 }
 
 export const addConversation = (data) => {
-    console.log(data)
     return {
         type: ADD_CONVERSATION,
         data: {

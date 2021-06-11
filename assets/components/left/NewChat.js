@@ -49,7 +49,6 @@ const NewChat = () => {
         e.preventDefault();
         dispatch(postMessages(conversations?.id, content, true, localStorage.getItem('authToken')))
             .then(response => {
-                console.log(response)
                 socket.emit('sendMessage', {
                     "conversationId": conversations?.id,
                     "content": response.content,
