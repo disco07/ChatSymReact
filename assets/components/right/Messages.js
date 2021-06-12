@@ -6,6 +6,11 @@ const Messages = ({message, user}) => {
 
     return (
         <>
+            {/*<div className="date">*/}
+            {/*    <hr/>*/}
+            {/*    <span>Yesterday</span>*/}
+            {/*    <hr/>*/}
+            {/*</div>*/}
             {
                 <div className={parseInt(message.users.id) === parseInt(user) ? `message me` : `message`}>
                     <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}

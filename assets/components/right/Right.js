@@ -112,16 +112,7 @@ const Right = ({conversationId, user, otherUser}) => {
                                         {
                                             conversationIndex !== -1 &&
                                             conversation.items[conversationIndex].messages?.map((message, index) => {
-                                                return (
-                                                    <>
-                                                        {/*<div className="date">*/}
-                                                        {/*    <hr/>*/}
-                                                        {/*    <span>Yesterday</span>*/}
-                                                        {/*    <hr/>*/}
-                                                        {/*</div>*/}
-                                                        <Messages key={index} message={message} user={user.id}/>
-                                                    </>
-                                                )
+                                                return <Messages key={index} message={message} user={user.id}/>
                                             })
                                         }
                                         {
