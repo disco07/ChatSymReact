@@ -2,35 +2,39 @@ import React from 'react';
 import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 
-const Messages = ({message, user}) => {
+const Messages = ({data, isMine, startsSequence, endsSequence, showTimestamp}) => {
 
+    const friendlyTimestamp = moment(data.createdAt).format('LLLL');
     return (
         <>
-            {/*<div className="date">*/}
-            {/*    <hr/>*/}
-            {/*    <span>Yesterday</span>*/}
-            {/*    <hr/>*/}
-            {/*</div>*/}
             {
-                <div className={parseInt(message.users.id) === parseInt(user) ? `message me` : `message`}>
-                    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}
-                         data-toggle="tooltip" data-placement="top" title={message.users.firstName} alt="avatar"/>
+                showTimestamp &&
+                <div className="date">
+                    <hr/>
+                    <span>{friendlyTimestamp}</span>
+                    <hr/>
+                </div>
+            }
+            {
+                <div className={isMine ? `message me` : `message`}>
+                    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}
+                         data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar"/>
                     <div className="text-main">
                         <div className="text-group">
-                            <div className={parseInt(message.users.id) === parseInt(user) ? `text me` : `text`}>
-                                <p>{message.content}</p>
+                            <div className={isMine ? `text me` : `text`}>
+                                <p>{data.content}</p>
                             </div>
                         </div>
-                        <span>{moment(message.createdAt).format('LT')}</span>
+                        <span>{moment(data.createdAt).format('LT')}</span>
                     </div>
                 </div>
             }
-            {/*<div className={parseInt(message.users.id) === parseInt(user) ? `message me` : `message`}>*/}
-            {/*    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${message.users.avatar}`}*/}
-            {/*         data-toggle="tooltip" data-placement="top" title={message.users.firstName} alt="avatar" />*/}
+            {/*<div className={isMine ? `message me` : `message`}>*/}
+            {/*    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}*/}
+            {/*         data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar" />*/}
             {/*    <div className="text-main">*/}
             {/*        <div className="text-group">*/}
-            {/*            <div className={parseInt(message.users.id) === parseInt(user) ? `text me` : `text`}>*/}
+            {/*            <div className={isMine ? `text me` : `text`}>*/}
             {/*                <div className="attachment">*/}
             {/*                    <button className="btn attach"><i*/}
             {/*                        className="material-icons md-18">insert_drive_file</i>*/}
@@ -42,7 +46,7 @@ const Messages = ({message, user}) => {
             {/*                </div>*/}
             {/*            </div>*/}
             {/*        </div>*/}
-            {/*        <span>{moment(message.createdAt).format('LT')}</span>*/}
+            {/*        <span>{moment(data.createdAt).format('LT')}</span>*/}
             {/*    </div>*/}
             {/*</div>*/}
         </>

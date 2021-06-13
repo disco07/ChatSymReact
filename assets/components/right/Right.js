@@ -5,6 +5,7 @@ import {addMessage, fetchMessage} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
 import SocketContext from "../../contexts/SocketContext";
+import moment from "moment";
 
 const Right = ({conversationId, user, otherUser}) => {
     const dispatch = useDispatch()
@@ -39,6 +40,67 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
     }, [conversationId, conversation.items.length]);
+
+    const renderMessages = () => {
+        let i = 0;
+        let messageCount = conversation.items[conversationIndex].messages?.length;
+        let tempMessages = [];
+
+        while (i < messageCount) {
+
+            let previous = conversation.items[conversationIndex].messages[i - 1];
+            let current = conversation.items[conversationIndex].messages[i];
+            let next = conversation.items[conversationIndex].messages[i + 1];
+            let isMine = current.users.id === user.id;
+            let currentMoment = moment(current.createdAt);
+            let prevBySameAuthor = false;
+            let nextBySameAuthor = false;
+            let startsSequence = true;
+            let endsSequence = true;
+            let showTimestamp = true;
+
+            if (previous) {
+                let previousMoment = moment(previous.createdAt);
+                let previousDuration = moment.duration(currentMoment.diff(previousMoment));
+                prevBySameAuthor = previous.users.id === current.users.id;
+
+                if (prevBySameAuthor && previousDuration.as('hours') < 1) {
+                    startsSequence = false;
+                }
+
+                if (previousDuration.as('hours') < 1) {
+                    showTimestamp = false;
+                }
+            }
+
+            if (next) {
+                let nextMoment = moment(next.createdAt);
+                let nextDuration = moment.duration(nextMoment.diff(currentMoment));
+                nextBySameAuthor = next.users.id === current.users.id;
+
+                if (nextBySameAuthor && nextDuration.as('hours') < 1) {
+                    endsSequence = false;
+                }
+            }
+
+            tempMessages.push(
+                <Messages
+                    key={i}
+                    isMine={isMine}
+                    startsSequence={startsSequence}
+                    endsSequence={endsSequence}
+                    showTimestamp={showTimestamp}
+                    data={current}
+                />
+            );
+
+            // Proceed to the next message.
+            i += 1;
+        }
+
+        return tempMessages;
+    }
+
 
     return (
         <>
@@ -110,10 +172,7 @@ const Right = ({conversationId, user, otherUser}) => {
                                 <div className="container">
                                     <div className="col-md-12">
                                         {
-                                            conversationIndex !== -1 &&
-                                            conversation.items[conversationIndex].messages?.map((message, index) => {
-                                                return <Messages key={index} message={message} user={user.id}/>
-                                            })
+                                            conversationIndex !== -1 && renderMessages()
                                         }
                                         {
                                             conversationIndex !== -1 &&
