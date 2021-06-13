@@ -55,8 +55,7 @@ const Right = ({conversationId, user, otherUser}) => {
             let currentMoment = moment(current.createdAt);
             let prevBySameAuthor = false;
             let nextBySameAuthor = false;
-            let startsSequence = true;
-            let endsSequence = true;
+            let viewDate = true;
             let showTimestamp = true;
 
             if (previous) {
@@ -64,11 +63,7 @@ const Right = ({conversationId, user, otherUser}) => {
                 let previousDuration = moment.duration(currentMoment.diff(previousMoment));
                 prevBySameAuthor = previous.users.id === current.users.id;
 
-                if (prevBySameAuthor && previousDuration.as('hours') < 1) {
-                    startsSequence = false;
-                }
-
-                if (previousDuration.as('hours') < 1) {
+                if (previousDuration.as('days') < 1) {
                     showTimestamp = false;
                 }
             }
@@ -78,8 +73,8 @@ const Right = ({conversationId, user, otherUser}) => {
                 let nextDuration = moment.duration(nextMoment.diff(currentMoment));
                 nextBySameAuthor = next.users.id === current.users.id;
 
-                if (nextBySameAuthor && nextDuration.as('hours') < 1) {
-                    endsSequence = false;
+                if (nextBySameAuthor) {
+                    viewDate = false;
                 }
             }
 
@@ -87,8 +82,7 @@ const Right = ({conversationId, user, otherUser}) => {
                 <Messages
                     key={i}
                     isMine={isMine}
-                    startsSequence={startsSequence}
-                    endsSequence={endsSequence}
+                    viewDate={viewDate}
                     showTimestamp={showTimestamp}
                     data={current}
                 />

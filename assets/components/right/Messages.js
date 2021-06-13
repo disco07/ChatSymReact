@@ -2,9 +2,16 @@ import React from 'react';
 import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 
-const Messages = ({data, isMine, startsSequence, endsSequence, showTimestamp}) => {
+const Messages = ({data, isMine, viewDate, showTimestamp}) => {
 
-    const friendlyTimestamp = moment(data.createdAt).format('LLLL');
+    const friendlyTimestamp = moment(data.createdAt).calendar(null,{
+        lastDay : '[Yesterday]',
+        sameDay : '[Today]',
+        nextDay : '[Tomorrow]',
+        lastWeek : '[last] dddd',
+        nextWeek : 'dddd',
+        sameElse : 'L'
+    }).toLocaleString();
     return (
         <>
             {
@@ -16,16 +23,16 @@ const Messages = ({data, isMine, startsSequence, endsSequence, showTimestamp}) =
                 </div>
             }
             {
-                <div className={isMine ? `message me` : `message`}>
-                    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}
-                         data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar"/>
+                <div className={isMine ? `message me` : `message`} style={{marginBottom: 0}}>
+                    {isMine === false && <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}
+                          data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar"/>}
                     <div className="text-main">
                         <div className="text-group">
                             <div className={isMine ? `text me` : `text`}>
                                 <p>{data.content}</p>
                             </div>
                         </div>
-                        <span>{moment(data.createdAt).format('LT')}</span>
+                        {viewDate && <span>{moment(data.createdAt).format('LT')}</span>}
                     </div>
                 </div>
             }
