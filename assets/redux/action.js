@@ -212,3 +212,20 @@ export const postConversations = (user, bearer_token) => {
         })
         .then(response => response)
 }
+
+export const patchMessagesUnread = (messageId, read, bearer_token) => {
+    return fetch(LOCALHOST + '/api/messages/' + messageId, {
+        method: 'PUT',
+        headers: {
+            'Authorization': bearer(bearer_token),
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            status: read
+        })
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(response => response)
+}

@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessage, fetchMessage} from "../../redux/action";
+import {addMessage, fetchMessage, patchMessagesUnread} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
 import SocketContext from "../../contexts/SocketContext";
 import moment from "moment";
 
-const Right = ({conversationId, user, otherUser}) => {
+const Right = ({conversationId, user, otherUser, location}) => {
     const dispatch = useDispatch()
     const conversation = useSelector(state => state.conversations)
     const [isTyping, setIsTyping] = useState({
@@ -28,7 +28,13 @@ const Right = ({conversationId, user, otherUser}) => {
     }, [])
 
     useEffect(() => {
-        socket.on('newMessages', response => dispatch(addMessage(conversationId, response)));
+        socket.on('newMessages', response => {
+            dispatch(addMessage(conversationId, response))
+            if (location.pathname === `/conversation/${conversationId}/${response.users.id}`) {
+                patchMessagesUnread(response.id, false, localStorage.getItem('authToken'))
+                    .then(response => console.log(response))
+            }
+        });
     }, [conversationId])
 
     useEffect(() => {
@@ -62,7 +68,6 @@ const Right = ({conversationId, user, otherUser}) => {
                 let previousMoment = moment(previous.createdAt);
                 let previousDuration = moment.duration(currentMoment.diff(previousMoment));
                 prevBySameAuthor = previous.users.id === current.users.id;
-
                 if (previousDuration.as('days') < 1) {
                     showTimestamp = false;
                 }
@@ -72,8 +77,7 @@ const Right = ({conversationId, user, otherUser}) => {
                 let nextMoment = moment(next.createdAt);
                 let nextDuration = moment.duration(nextMoment.diff(currentMoment));
                 nextBySameAuthor = next.users.id === current.users.id;
-
-                if (nextBySameAuthor) {
+                if (nextBySameAuthor && nextDuration.as('hours') < 1) {
                     viewDate = false;
                 }
             }
