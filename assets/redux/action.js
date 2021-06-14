@@ -34,7 +34,7 @@ export const loadConversation = () => {
     }
 }
 
-export const addConversation = (data, contentId) => {
+export const addConversation = (data, userId) => {
     return {
         type: ADD_CONVERSATION,
         data: {
@@ -47,7 +47,7 @@ export const addConversation = (data, contentId) => {
             createdAt: data.createdAt,
             conversationId: data.conversationId,
         },
-        contentId
+        userId
     }
 }
 

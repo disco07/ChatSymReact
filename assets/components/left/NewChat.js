@@ -3,6 +3,7 @@ import {addConversation, fetchUsers, postConversations, postMessages} from "../.
 import {LOCALHOST} from "../../services/config";
 import {useDispatch} from "react-redux";
 import SocketContext from "../../contexts/SocketContext";
+import UserContext from "../../contexts/UserContext";
 
 const NewChat = () => {
     const [search, setSearch] = useState('')
@@ -14,6 +15,7 @@ const NewChat = () => {
     const [error, setError] = useState('');
     const dispatch = useDispatch()
     const {socket} = useContext(SocketContext)
+    const {user} = useContext(UserContext)
 
     const handleChange = (e) => {
         setSearch(e.target.value)
@@ -66,7 +68,7 @@ const NewChat = () => {
                     content: response.content,
                     createdAt: response.createdAt,
                     conversationId: conversations?.id,
-                }, response.id))
+                }, user.id))
                 socket.emit('sendConversation', {
                     conv: conversations,
                     id: userSelected[0].id,

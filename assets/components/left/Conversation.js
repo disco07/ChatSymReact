@@ -7,6 +7,7 @@ import UserContext from "../../contexts/UserContext";
 const Conversation = ({conversation, totalUnread}) => {
     const [unread, setUnread] = useState(conversation.conv.totalUnread)
     const {user} = useContext(UserContext)
+    console.log(unread > 0 && parseInt(conversation.conv.lastMessage.users.id) !== parseInt(user.id))
     const unreadColor = (unread) => {
         return unread < 5 ? "bg-yellow" : unread < 10 ? "bg-green" : "bg-pink"
     }
@@ -18,7 +19,7 @@ const Conversation = ({conversation, totalUnread}) => {
 
     return (
         <>
-            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.id}
+            <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.otherUserId}
                      className={unread > 0 ?
                          "filterDiscussions all unread single" : "filterDiscussions all read single"}
                      id="list-chat-list" data-toggle="list" role="tab">
@@ -29,7 +30,7 @@ const Conversation = ({conversation, totalUnread}) => {
                     <i className="material-icons online">fiber_manual_record</i>
                 </div>
                 {
-                    unread > 0 && parseInt(conversation.conv.lastMessage.users.id) === parseInt(user.id) &&
+                    unread > 0 && parseInt(conversation.conv.lastMessage.users.id) !== parseInt(user.id) &&
                     <div className={`new ${unreadColor(conversation.conv.totalUnread)}`}>
                         <span>+{conversation.conv.totalUnread}</span>
                     </div>

@@ -63,18 +63,19 @@ const conversations = (state = initialState, action) => {
         case ADD_CONVERSATION:
             let count = 0;
             count = state.items.filter(conversation =>  parseInt(conversation?.conversationId) === parseInt(action.data.conversationId)).length;
-            count === 0 && (action.data.conv.lastMessage = "/api/messages/" + action.data.contentId)
+            count === 0 && (action.data.conv.lastMessage = {users: {id: action.data.userId}})
             return {
                 ...state,
                 items: count > 0 ? state.items : [...state.items, action.data]
             }
         case SET_LAST_MESSAGE:
+            console.log(action.data)
             const _newConversationsWithLastMessage = state.items.map(conversation => {
                 return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
                     (
                         conversation.createdAt = action.data.createdAt,
                             conversation.content = action.data.content,
-                            conversation.conv.lastMessage = "/api/messages/" + action.data.id,
+                            conversation.conv.lastMessage = {users: {id: action.data.users.id}},
                             Object.assign({}, conversation)
                     ) :
                     Object.assign({}, conversation)

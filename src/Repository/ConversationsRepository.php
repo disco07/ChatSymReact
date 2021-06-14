@@ -25,7 +25,8 @@ class ConversationsRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('c');
         $qb->
-        select( 'c as conv','otherUser.id', 'otherUser.firstName', 'otherUser.avatar', 'otherUser.lastName', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
+        select('c as conv', 'otherUser.id as otherUserId', 'otherUser.firstName', 'otherUser.avatar',
+            'otherUser.lastName', 'c.id as conversationId', 'lm.content', 'lm.createdAt')
             ->innerJoin('c.participants', 'p', Join::WITH, $qb->expr()->neq('p.users', ':user'))
             ->innerJoin('c.participants', 'me', Join::WITH, $qb->expr()->eq('me.users', ':user'))
             ->leftJoin('c.lastMessage', 'lm')
@@ -33,8 +34,7 @@ class ConversationsRepository extends ServiceEntityRepository
             ->innerJoin('p.users', 'otherUser')
             ->where('meUser.id = :user')
             ->setParameter('user', $userId)
-            ->orderBy('lm.createdAt', 'DESC')
-        ;
+            ->orderBy('lm.createdAt', 'DESC');
 
         return $qb->getQuery()->getResult();
     }
@@ -61,10 +61,9 @@ class ConversationsRepository extends ServiceEntityRepository
             ->setParameters([
                 'me' => $myId,
                 'otherUser' => $otherUserId
-            ])
-        ;
+            ]);
 
-        if( count($qb->getQuery()->getResult())){
+        if (count($qb->getQuery()->getResult())) {
             $qb = $this->createQueryBuilder('c');
             $qb
                 ->select('c.id as conversationId')
@@ -85,11 +84,9 @@ class ConversationsRepository extends ServiceEntityRepository
                 ->setParameters([
                     'me' => $myId,
                     'otherUser' => $otherUserId
-                ])
-            ;
+                ]);
             return $qb->getQuery()->getResult();
-        }
-        else{
+        } else {
             return $qb->getQuery()->getResult();
         }
     }
@@ -107,8 +104,7 @@ class ConversationsRepository extends ServiceEntityRepository
             ->setParameters([
                 'conversationId' => $conversationId,
                 'userId' => $userId
-            ])
-        ;
+            ]);
 
         return $qb->getQuery()->getOneOrNullResult();
     }
