@@ -7,7 +7,7 @@ import Messages from "./Messages";
 import SocketContext from "../../contexts/SocketContext";
 import moment from "moment";
 
-const Right = ({conversationId, user, otherUser, location}) => {
+const Right = ({conversationId, user, otherUser}) => {
     const dispatch = useDispatch()
     const conversation = useSelector(state => state.conversations)
     const [isTyping, setIsTyping] = useState({
@@ -28,14 +28,16 @@ const Right = ({conversationId, user, otherUser, location}) => {
     }, [])
 
     useEffect(() => {
+        let mounted = true;
         socket.on('newMessages', response => {
             dispatch(addMessage(conversationId, response))
-            if (location.pathname === `/conversation/${conversationId}/${response.users.id}`) {
+            if (mounted) {
                 patchMessagesUnread(response.id, false, localStorage.getItem('authToken'))
                     .then(response => console.log(response))
             }
         });
-    }, [conversationId])
+        return () => mounted = false;
+    }, [conversationId, socket])
 
     useEffect(() => {
         socket.on('userStartTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
@@ -51,6 +53,7 @@ const Right = ({conversationId, user, otherUser, location}) => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
+        let messages = [];
 
         while (i < messageCount) {
 
@@ -68,7 +71,7 @@ const Right = ({conversationId, user, otherUser, location}) => {
                 let previousMoment = moment(previous.createdAt);
                 let previousDuration = moment.duration(currentMoment.diff(previousMoment));
                 prevBySameAuthor = previous.users.id === current.users.id;
-                if (previousDuration.as('days') < 1) {
+                if ((new Date(current.createdAt).getDate() - new Date(previous.createdAt).getDate()) < 1) {
                     showTimestamp = false;
                 }
             }

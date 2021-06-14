@@ -14,6 +14,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=MessagesRepository::class)
  * @ApiResource(
  *     normalizationContext={"groups"={"read:message"}},
+ *     paginationItemsPerPage=10,
+ *     attributes={"order"={"createdAt":"DESC"}},
  *     collectionOperations={
  *          "get",
  *          "post_message_conv"={

@@ -11,7 +11,7 @@ const Messages = ({data, isMine, viewDate, showTimestamp}) => {
         lastWeek : '[last] dddd',
         nextWeek : 'dddd',
         sameElse : 'L'
-    }).toLocaleString();
+    });
     return (
         <>
             {

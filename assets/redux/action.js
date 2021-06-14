@@ -156,7 +156,7 @@ export const fetchMessage = (conversationId, bearer_token) => dispatch => {
             return response.json()
         })
         .then(response => {
-            return dispatch(getMessage(conversationId, response['hydra:member']))
+            return dispatch(getMessage(conversationId, response['hydra:member'].reverse()))
         })
 }
 
