@@ -56,24 +56,25 @@ class Messages
      * @ORM\Column(type="datetime")
      * @Assert\NotBlank()
      * @Assert\Type(type="\DateTime")
-     * @Groups({"read:message"})
+     * @Groups({"read:message", "read:conversation"})
      */
     private $createdAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
-     * @Groups({"read:message"})
+     * @Groups({"read:message", "read:conversation"})
      */
     private $users;
 
     /**
      * @ORM\ManyToOne(targetEntity=Conversations::class, inversedBy="messages")
+     * @Groups({"read:message"})
      */
     private $conversation;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"read:message"})
+     * @Groups({"read:message", "read:conversation"})
      */
     private $status;
 
