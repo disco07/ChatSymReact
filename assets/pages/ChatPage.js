@@ -9,10 +9,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchConversation} from "../redux/action";
 import Services from "../services/Services";
 import SocketContext from "../contexts/SocketContext";
+import UserContext from "../contexts/UserContext";
 
 const ChatPage = () => {
 
     const {socket} = useContext(SocketContext)
+    const [user, setUser] = useState(Services.user())
     useEffect(() => {
         socket.on('message', response => console.log(response))
     }, [])
@@ -23,19 +25,23 @@ const ChatPage = () => {
         socket.emit("join", {user: Services.user().id})
     }, [])
     return (
-
-        <div className="layout">
-            <SideBar user={Services.user()}/>
-            <Left conversations={conversations}/>
-            <NewChat/>
-            <Switch>
-                <Route path={"/conversation/:id/:idU"}
-                       render={props => <Right {...props} conversationId={props.match.params.id}
-                                               otherUser={props.match.params.idU}
-                                               user={Services.user()}/>}/>
-                <Route path={"/conversation"} component={Blank}/>
-            </Switch>
-        </div>
+        <UserContext.Provider value={{
+            user,
+            setUser
+        }}>
+            <div className="layout">
+                <SideBar user={Services.user()}/>
+                <Left conversations={conversations}/>
+                <NewChat/>
+                <Switch>
+                    <Route path={"/conversation/:id/:idU"}
+                           render={props => <Right {...props} conversationId={props.match.params.id}
+                                                   otherUser={props.match.params.idU}
+                                                   user={Services.user()}/>}/>
+                    <Route path={"/conversation"} component={Blank}/>
+                </Switch>
+            </div>
+        </UserContext.Provider>
     );
 };
 

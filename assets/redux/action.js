@@ -3,7 +3,12 @@ import {
     ADD_MESSAGE,
     CONVERSATION_ERROR,
     CONVERSATION_LOAD,
-    GET_CONVERSATION, GET_MESSAGE, MESSAGE_ERROR, MESSAGE_LOAD, SET_LAST_MESSAGE, USER_CONNECTED,
+    GET_CONVERSATION,
+    GET_MESSAGE,
+    MESSAGE_ERROR,
+    MESSAGE_LOAD,
+    SET_LAST_MESSAGE,
+    USER_CONNECTED,
     USER_ERROR_CONNECTED
 } from "./constants";
 
@@ -97,8 +102,8 @@ export const errorMessage = () => {
 
 const bearer = (bearer_token) => 'Bearer ' + bearer_token;
 
-export const loginUser = (data) => dispatch => {
-    return fetch(LOCALHOST + '/api/login_check', {
+export const loginUser = (data) => async dispatch => {
+    const response = await fetch(LOCALHOST + '/api/login_check', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -107,61 +112,60 @@ export const loginUser = (data) => dispatch => {
             username: data.username,
             password: data.password
         })
-    })
-        .then(response => {
-            if (!response.ok) {
-                return dispatch(errorLogin(response))
-            }
-            return response.json()
-        })
-        .then(response => {
-            window.localStorage.setItem('authToken', response.token)
-            return dispatch(login(response))
-        })
+    });
+    if (!response.ok) {
+        return dispatch(errorLogin(response));
+    }
+    const response_1 = await response.json();
+    window.localStorage.setItem('authToken', response_1.token);
+    return dispatch(login(response_1));
 }
 
-export const fetchConversation = (bearer_token) => dispatch => {
+export const fetchConversation = (bearer_token) => async dispatch => {
     dispatch(loadConversation())
-    return fetch(LOCALHOST + '/api/allconversations', {
+    const response = await fetch(LOCALHOST + '/api/allconversations', {
         method: 'GET',
         headers: {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
         },
-    })
-        .then(response => {
-            if (!response.ok) {
-                return dispatch(errorConversation(response))
-            }
-            return response.json()
-        })
-        .then(response => {
-            return dispatch(getConversation(response['hydra:member']))
-        })
+    });
+    if (!response.ok) {
+        return dispatch(errorConversation(response));
+    }
+    const response_1 = await response.json();
+    return dispatch(getConversation(response_1['hydra:member']));
 }
 
-export const fetchMessage = (conversationId, bearer_token) => dispatch => {
+export const fetchMessage = (conversationId, bearer_token) => async dispatch => {
     dispatch(loadMessage())
-    return fetch(LOCALHOST + '/api/messages?conversation=' + conversationId, {
+    const response = await fetch(LOCALHOST + '/api/messages?conversation=' + conversationId, {
         method: 'GET',
         headers: {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
         },
-    })
-        .then(response => {
-            if (!response.ok) {
-                return dispatch(errorMessage(response))
-            }
-            return response.json()
-        })
-        .then(response => {
-            return dispatch(getMessage(conversationId, response['hydra:member'].reverse()))
-        })
+    });
+    if (!response.ok) {
+        return dispatch(errorMessage(response));
+    }
+    const response_1 = await response.json();
+    return dispatch(getMessage(conversationId, response_1['hydra:member'].reverse()));
 }
 
-export const postMessages = (conversationId, content, newConversation, bearer_token) => dispatch => {
-    return fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
+export const fetchMessagesUnread = async (id, bearer_token) => {
+    const response = await fetch(LOCALHOST + '/api/messages_unread?conversation=' + id, {
+        method: 'GET',
+        headers: {
+            'Authorization': bearer(bearer_token),
+            'Content-Type': 'application/json'
+        },
+    });
+    return await response.json();
+}
+
+export const postMessages = (conversationId, content, newConversation, bearer_token) => async dispatch => {
+    const response = await fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
         method: 'POST',
         headers: {
             'Authorization': bearer(bearer_token),
@@ -170,51 +174,42 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
         body: JSON.stringify({
             content: content
         })
-    })
-        .then(response => {
-            return response.json()
-        })
-        .then(response => {
-            if (newConversation === false) {
-                dispatch(setLastMessage(conversationId, response))
-                return dispatch(addMessage(conversationId, response))
-            }
-            dispatch(setLastMessage(conversationId, response))
-            dispatch(addMessage(conversationId, response))
-            return response
-        })
+    });
+    const response_1 = await response.json();
+    if (newConversation === false) {
+        dispatch(setLastMessage(conversationId, response_1));
+        return dispatch(addMessage(conversationId, response_1));
+    }
+    dispatch(setLastMessage(conversationId, response_1));
+    dispatch(addMessage(conversationId, response_1));
+    return response_1;
 }
 
-export const fetchUsers = (search) => {
-    return fetch(LOCALHOST + '/api/users?firstName=' + search, {
+export const fetchUsers = async (search) => {
+    const response = await fetch(LOCALHOST + '/api/users?firstName=' + search, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
-    })
-        .then(response => response.json())
-        .then(response => {
-            return response['hydra:member']
-        })
+    });
+    const response_1 = await response.json();
+    return response_1['hydra:member'];
 }
 
-export const postConversations = (user, bearer_token) => {
-    return fetch(LOCALHOST + '/api/newconversations?users=' + user, {
+export const postConversations = async (user, bearer_token) => {
+    const response = await fetch(LOCALHOST + '/api/newconversations?users=' + user, {
         method: 'POST',
         headers: {
             'Authorization': bearer(bearer_token),
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({})
-    })
-        .then(response => {
-            return response.json()
-        })
-        .then(response => response)
+    });
+    return await response.json();
 }
 
-export const patchMessagesUnread = (messageId, read, bearer_token) => {
-    return fetch(LOCALHOST + '/api/messages/' + messageId, {
+export const patchMessagesUnread = async (messageId, read, bearer_token) => {
+    const response = await fetch(LOCALHOST + '/api/messages/' + messageId, {
         method: 'PUT',
         headers: {
             'Authorization': bearer(bearer_token),
@@ -223,9 +218,6 @@ export const patchMessagesUnread = (messageId, read, bearer_token) => {
         body: JSON.stringify({
             status: read
         })
-    })
-        .then(response => {
-            return response.json()
-        })
-        .then(response => response)
+    });
+    return await response.json();
 }

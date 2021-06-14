@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessage, fetchMessage, patchMessagesUnread} from "../../redux/action";
+import {addMessage, fetchMessage, fetchMessagesUnread, patchMessagesUnread} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
 import SocketContext from "../../contexts/SocketContext";
@@ -47,6 +47,7 @@ const Right = ({conversationId, user, otherUser}) => {
 
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
+        fetchMessagesUnread(conversationId, localStorage.getItem('authToken')).then(response => console.log(response))
     }, [conversationId, conversation.items.length]);
 
     const renderMessages = () => {

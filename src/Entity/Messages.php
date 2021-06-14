@@ -23,6 +23,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "path"="/newMessage",
  *              "controller"=App\Controller\MessageCreateApi::class
  *          },
+ *          "get_message_unread"={
+ *              "method"="get",
+ *              "path"="/messages_unread",
+ *              "controller"=App\Controller\MessageUnreadController::class,
+ *          },
  *          "get", "post"
  *     },
  *     denormalizationContext={"desable_type_enforcement"=true}

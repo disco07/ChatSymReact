@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 import {NavLink} from "react-router-dom";
+import UserContext from "../../contexts/UserContext";
 
 const Conversation = ({conversation, totalUnread, conversationId}) => {
     const [unread, setUnread] = useState(conversation.conv.totalUnread)
+    const {user} = useContext(UserContext)
+    console.log(conversation.conv.lastMessage)
     const unreadColor = (unread) => {
         return unread < 5 ? "bg-yellow" : unread < 10 ? "bg-green" : "bg-pink"
     }
@@ -27,7 +30,7 @@ const Conversation = ({conversation, totalUnread, conversationId}) => {
                     <i className="material-icons online">fiber_manual_record</i>
                 </div>
                 {
-                    unread > 0 && parseInt(conversationId) === parseInt(conversation.conversationId) &&
+                    unread > 0 && parseInt(conversation.id) === parseInt(user.id) &&
                     <div className={`new ${unreadColor(conversation.conv.totalUnread)}`}>
                         <span>+{conversation.conv.totalUnread}</span>
                     </div>

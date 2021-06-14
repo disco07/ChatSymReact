@@ -36,6 +36,15 @@ class MessagesRepository extends ServiceEntityRepository
     }
     */
 
+    public function findMessagesUnreadByConversation($id)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->where('m.status = 1')
+            ->andWhere('m.conversation = :id')
+            ->setParameter('id', $id);
+        return $qb->getQuery()->getResult();
+    }
+
     /*
     public function findOneBySomeField($value): ?Messages
     {
