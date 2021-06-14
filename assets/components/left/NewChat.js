@@ -61,7 +61,7 @@ const NewChat = () => {
                 }, userSelected[0].id)
                 dispatch(addConversation({
                     conv: conversations,
-                    id: userSelected[0].id,
+                    otherUserId: userSelected[0].id,
                     firstName: userSelected[0].firstName,
                     lastName: userSelected[0].lastName,
                     avatar: userSelected[0].avatar,
@@ -71,10 +71,10 @@ const NewChat = () => {
                 }, user.id))
                 socket.emit('sendConversation', {
                     conv: conversations,
-                    id: userSelected[0].id,
-                    firstName: userSelected[0].firstName,
-                    lastName: userSelected[0].lastName,
-                    avatar: userSelected[0].avatar,
+                    otherUserId: user.id,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    avatar: user.avatar,
                     content: response.content,
                     createdAt: response.createdAt,
                     conversationId: conversations?.id,

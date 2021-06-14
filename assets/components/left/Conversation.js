@@ -7,7 +7,6 @@ import UserContext from "../../contexts/UserContext";
 const Conversation = ({conversation, totalUnread}) => {
     const [unread, setUnread] = useState(conversation.conv.totalUnread)
     const {user} = useContext(UserContext)
-    console.log(unread > 0 && parseInt(conversation.conv.lastMessage.users.id) !== parseInt(user.id))
     const unreadColor = (unread) => {
         return unread < 5 ? "bg-yellow" : unread < 10 ? "bg-green" : "bg-pink"
     }

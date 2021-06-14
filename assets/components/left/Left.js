@@ -19,7 +19,7 @@ const Left = ({conversations}) => {
     }, [conversationId]);
 
     useEffect(() => {
-        socket.on('newConversation', (conversation, contentId) => dispatch(addConversation(conversation, contentId)));
+        socket.on('newConversation', (conversation, userId) => dispatch(addConversation(conversation, userId)));
     }, [])
     return (
         <>

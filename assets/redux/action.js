@@ -39,7 +39,7 @@ export const addConversation = (data, userId) => {
         type: ADD_CONVERSATION,
         data: {
             conv: data.conv,
-            id: data.id,
+            otherUserId: data.id,
             firstName: data.firstName,
             lastName: data.lastName,
             avatar: data.avatar,
