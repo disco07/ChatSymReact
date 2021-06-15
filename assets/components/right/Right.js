@@ -54,7 +54,6 @@ const Right = ({conversationId, user, otherUser}) => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
-        let messages = [];
 
         while (i < messageCount) {
 
@@ -67,6 +66,7 @@ const Right = ({conversationId, user, otherUser}) => {
             let nextBySameAuthor = false;
             let viewDate = true;
             let showTimestamp = true;
+            let checkRead = false;
 
             if (previous) {
                 let previousMoment = moment(previous.createdAt);
@@ -86,6 +86,12 @@ const Right = ({conversationId, user, otherUser}) => {
                 }
             }
 
+            if (!next) {
+                if (current.status === false && isMine) {
+                    checkRead = true
+                }
+            }
+
             tempMessages.push(
                 <Messages
                     key={i}
@@ -93,6 +99,7 @@ const Right = ({conversationId, user, otherUser}) => {
                     viewDate={viewDate}
                     showTimestamp={showTimestamp}
                     data={current}
+                    checkRead={checkRead}
                 />
             );
 

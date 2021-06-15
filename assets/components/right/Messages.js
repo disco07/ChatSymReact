@@ -2,7 +2,7 @@ import React from 'react';
 import {LOCALHOST} from "../../services/config";
 import moment from "moment";
 
-const Messages = ({data, isMine, viewDate, showTimestamp}) => {
+const Messages = ({data, isMine, viewDate, showTimestamp, checkRead}) => {
 
     const friendlyTimestamp = moment(data.createdAt).calendar(null,{
         lastDay : '[Yesterday]',
@@ -32,7 +32,7 @@ const Messages = ({data, isMine, viewDate, showTimestamp}) => {
                                 <p>{data.content}</p>
                             </div>
                         </div>
-                        {viewDate && <span>{moment(data.createdAt).format('LT')}</span>}
+                        {viewDate && <span>{checkRead && <i className="material-icons">check</i>}{moment(data.createdAt).format('LT')}</span>}
                     </div>
                 </div>
             }

@@ -69,7 +69,6 @@ const conversations = (state = initialState, action) => {
                 items: count > 0 ? state.items : [...state.items, action.data]
             }
         case SET_LAST_MESSAGE:
-            console.log(action.data)
             const _newConversationsWithLastMessage = state.items.map(conversation => {
                 return parseInt(conversation.conversationId) === parseInt(action.conversationId) ?
                     (
