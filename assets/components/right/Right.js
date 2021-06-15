@@ -47,13 +47,14 @@ const Right = ({conversationId, user, otherUser}) => {
 
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
-        fetchMessagesUnread(conversationId, localStorage.getItem('authToken')).then(response => console.log(response))
+        fetchMessagesUnread(conversationId, localStorage.getItem('authToken')).then(response => response)
     }, [conversationId, conversation.items.length]);
 
     const renderMessages = () => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
+        let lastMessageRead;
 
         while (i < messageCount) {
 
@@ -86,10 +87,8 @@ const Right = ({conversationId, user, otherUser}) => {
                 }
             }
 
-            if (!next) {
-                if (current.status === false && isMine) {
-                    checkRead = true
-                }
+            if (isMine && current.status === false) {
+                lastMessageRead = current
             }
 
             tempMessages.push(
