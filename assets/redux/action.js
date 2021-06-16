@@ -7,7 +7,7 @@ import {
     GET_MESSAGE,
     MESSAGE_ERROR,
     MESSAGE_LOAD,
-    SET_LAST_MESSAGE,
+    SET_LAST_MESSAGE, SET_MESSAGE_TO_READ,
     USER_CONNECTED,
     USER_ERROR_CONNECTED
 } from "./constants";
@@ -91,6 +91,14 @@ export const setLastMessage = (conversationId, data) => {
         type: SET_LAST_MESSAGE,
         conversationId,
         data
+    }
+}
+
+export const setMessageToRead = (conversationId, messageId) => {
+    return {
+        type: SET_MESSAGE_TO_READ,
+        conversationId,
+        messageId
     }
 }
 

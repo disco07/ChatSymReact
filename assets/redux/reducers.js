@@ -4,7 +4,7 @@ import {
     CONVERSATION_LOAD,
     GET_CONVERSATION,
     GET_MESSAGE,
-    MESSAGE_LOAD, SET_LAST_MESSAGE,
+    MESSAGE_LOAD, SET_LAST_MESSAGE, SET_MESSAGE_TO_READ,
     USER_CONNECTED
 } from "./constants";
 
@@ -83,6 +83,10 @@ const conversations = (state = initialState, action) => {
                 ...state,
                 items: [..._newConversationsWithLastMessage]
             }
+        case SET_MESSAGE_TO_READ:
+            const conversation = state.items.filter(conversation =>  parseInt(conversation?.conversationId) === parseInt(action.data.conversationId))[0];
+            conversation?.messages.map(message => message.id === action.data.messageId && (message.status = false))
+            return state;
         default:
             return state;
     }

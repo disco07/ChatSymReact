@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {LOCALHOST} from "../../services/config";
 import {useDispatch, useSelector} from "react-redux";
-import {addMessage, fetchMessage, fetchMessagesUnread, patchMessagesUnread} from "../../redux/action";
+import {addMessage, fetchMessage, fetchMessagesUnread, patchMessagesUnread, setMessageToRead} from "../../redux/action";
 import Input from "./Input";
 import Messages from "./Messages";
 import SocketContext from "../../contexts/SocketContext";
@@ -33,7 +33,10 @@ const Right = ({conversationId, user, otherUser}) => {
             dispatch(addMessage(conversationId, response))
             if (mounted) {
                 patchMessagesUnread(response.id, false, localStorage.getItem('authToken'))
-                    .then(response => console.log(response))
+                    .then(response => {
+                        dispatch(setMessageToRead(conversationId, response.id))
+                        socket.emit('updateMessageToRead', conversationId, response.id, otherUser)
+                    })
             }
         });
         return () => mounted = false;
@@ -42,7 +45,7 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         socket.on('userStartTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
         socket.on('userStopTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
-
+        socket.on('updateMessage', (conversationId, messageId) => dispatch(setMessageToRead(conversationId, messageId)))
     }, []);
 
     useEffect(() => {

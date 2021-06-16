@@ -9,3 +9,4 @@ export const GET_MESSAGE = "GET_MESSAGE";
 export const MESSAGE_ERROR = "MESSAGE_ERROR";
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const SET_LAST_MESSAGE = "SET_LAST_MESSAGE";
+export const SET_MESSAGE_TO_READ = "SET_MESSAGE_TO_READ";

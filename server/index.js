@@ -45,6 +45,10 @@ io.on('connection', (socket) => {
         io.to(parseInt(userId)).emit('newConversation', data, contentId);
     });
 
+    socket.on('updateMessageToRead', (conversationId, messageId, userId) => {
+        io.to(parseInt(userId)).emit('updateMessage', conversationId, messageId);
+    })
+
     socket.on('startTyping', (userId, conversationId) => {
         socket.to(parseInt(userId)).emit('userStartTyping', true, conversationId)
     })
