@@ -55,7 +55,10 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         conversation.items.length !== 0 && dispatch(fetchMessage(conversationId, localStorage.getItem('authToken')))
         fetchMessagesUnread(conversationId, localStorage.getItem('authToken'))
-            .then(response => socket.emit('updateMessageToRead', conversationId, response.id, otherUser))
+            .then(response => {
+                dispatch(setMessageToRead(conversationId, response.id))
+                socket.emit('updateMessageToRead', conversationId, response.id, otherUser)
+            })
     }, [conversationId, conversation.items.length]);
 
     const renderMessages = () => {

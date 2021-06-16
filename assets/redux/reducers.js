@@ -75,6 +75,7 @@ const conversations = (state = initialState, action) => {
                         conversation.createdAt = action.data.createdAt,
                             conversation.content = action.data.content,
                             conversation.conv.lastMessage = {users: {id: action.data.users.id}},
+                            conversation.conv.totalUnread = conversation.conv.totalUnread + 1,
                             Object.assign({}, conversation)
                     ) :
                     Object.assign({}, conversation)
@@ -85,7 +86,8 @@ const conversations = (state = initialState, action) => {
             }
         case SET_MESSAGE_TO_READ:
             const conversation = state.items.filter(conversation =>  parseInt(conversation?.conversationId) === parseInt(action.conversationId))[0];
-            conversation?.messages.map(message => message.id === action.messageId && (message.status = false))
+            conversation && (conversation.conv.totalUnread = 0);
+            conversation?.messages?.map(message => message.id === action.messageId && (message.status = false))
             return state;
         default:
             return state;

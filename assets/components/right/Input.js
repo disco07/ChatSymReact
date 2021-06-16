@@ -62,7 +62,7 @@ const Input = ({conversationId, otherUser}) => {
                         <form className="position-relative w-100">
                             <textarea className="form-control" value={content}
                                       onChange={handleChange}
-                                      onKeyDown= { e => { e.keyCode !== 13 ? sendTyping() : console.log('dedans') } }
+                                      onKeyDown= { e => { e.keyCode !== 13 ? sendTyping() : handleSubmit(e) } }
                                       placeholder="Start typing for reply..."
                                       name="content"
                                       rows="1"/>
