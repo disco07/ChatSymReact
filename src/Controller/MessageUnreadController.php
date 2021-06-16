@@ -27,6 +27,6 @@ class MessageUnreadController
                 $message->setStatus(0);
         }
         $this->entityManager->flush();
-        return $messages;
+        return end($messages);
     }
 }
