@@ -84,8 +84,8 @@ const conversations = (state = initialState, action) => {
                 items: [..._newConversationsWithLastMessage]
             }
         case SET_MESSAGE_TO_READ:
-            const conversation = state.items.filter(conversation =>  parseInt(conversation?.conversationId) === parseInt(action.data.conversationId))[0];
-            conversation?.messages.map(message => message.id === action.data.messageId && (message.status = false))
+            const conversation = state.items.filter(conversation =>  parseInt(conversation?.conversationId) === parseInt(action.conversationId))[0];
+            conversation?.messages.map(message => message.id === action.messageId && (message.status = false))
             return state;
         default:
             return state;

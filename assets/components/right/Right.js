@@ -14,6 +14,7 @@ const Right = ({conversationId, user, otherUser}) => {
         isTyping: false,
         idConversation: ''
     })
+    const [messageReceived, setMessageReceived] = useState(0);
     const conversationIndex = conversation.items.findIndex(conversation => parseInt(conversation.conversationId) === parseInt(conversationId))
     const {socket} = useContext(SocketContext)
     const ref = useRef(null)
@@ -45,7 +46,10 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         socket.on('userStartTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
         socket.on('userStopTyping', (data, idConv) => setIsTyping({isTyping: data, idConversation: idConv}))
-        socket.on('updateMessage', (conversationId, messageId) => dispatch(setMessageToRead(conversationId, messageId)))
+        socket.on('updateMessage', (conversationId, messageId) => {
+            dispatch(setMessageToRead(conversationId, messageId))
+            setMessageReceived(messageId)
+        })
     }, []);
 
     useEffect(() => {
@@ -57,10 +61,8 @@ const Right = ({conversationId, user, otherUser}) => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
-        let lastMessageRead = conversation.items[conversationIndex]
-            .messages?.filter(message => message.users.id === user.id && message.status === false).pop();
-        console.log(lastMessageRead)
-
+        let lastMessageRead = conversation.items[conversationIndex].messages?.length !== undefined && conversation.items[conversationIndex]
+            .messages?.filter(message => message.users.id === user.id && message.status === false).pop().id;
         while (i < messageCount) {
 
             let previous = conversation.items[conversationIndex].messages[i - 1];
@@ -90,11 +92,13 @@ const Right = ({conversationId, user, otherUser}) => {
                 if (nextBySameAuthor && nextDuration.as('hours') < 1) {
                     viewDate = false;
                 }
-                if (lastMessageRead.id === current.id) {
+                if (lastMessageRead === current.id) {
                     viewDate = true;
                 }
             }
-            if (lastMessageRead.id === current.id) {
+            if (lastMessageRead === current.id) {
+                checkRead = true;
+            }else if (messageReceived !== 0 && messageReceived === current.id) {
                 checkRead = true;
             }
 
