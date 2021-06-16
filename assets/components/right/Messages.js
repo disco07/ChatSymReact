@@ -23,7 +23,7 @@ const Messages = ({data, isMine, viewDate, showTimestamp, checkRead}) => {
                 </div>
             }
             {
-                <div className={isMine ? `message me` : `message`} style={{marginBottom: 0}}>
+                <div className={isMine ? `message me` : `message`} style={{marginBottom: !viewDate && 0}}>
                     {isMine === false && <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}
                           data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar"/>}
                     <div className="text-main">

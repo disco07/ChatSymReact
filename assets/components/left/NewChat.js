@@ -57,7 +57,6 @@ const NewChat = () => {
                     "createdAt": response.createdAt,
                     "id": response.id,
                     "users": response.users,
-                    "totalUnread": 1,
                 }, userSelected[0].id)
                 dispatch(addConversation({
                     conv: conversations,

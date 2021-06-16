@@ -5,18 +5,14 @@ import {addConversation, setLastMessage} from "../../redux/action";
 import {useDispatch} from "react-redux";
 
 const Left = ({conversations}) => {
-    const [unread, setUnread] = useState(0)
-    const [conversationId, setConversationId] = useState(0)
     const {socket} = useContext(SocketContext)
     const dispatch = useDispatch()
 
     useEffect(() => {
         socket.on('newMessages', response => {
             dispatch(setLastMessage(response.conversationId, response));
-            setUnread(response.totalUnread);
-            setConversationId(response.conversationId);
         });
-    }, [conversationId]);
+    }, []);
 
     useEffect(() => {
         socket.on('newConversation', (conversation, userId) => dispatch(addConversation(conversation, userId)));
@@ -57,7 +53,7 @@ const Left = ({conversations}) => {
                                                 .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                                                 .map((conversation, index) => {
                                                     if (conversation.conv.lastMessage !== null)
-                                                        return <Conversation key={index} totalUnread={unread} conversationId={conversationId} conversation={conversation}/>
+                                                        return <Conversation key={index} conversation={conversation}/>
                                             })
                                         }
                                     </div>

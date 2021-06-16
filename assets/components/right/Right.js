@@ -54,7 +54,9 @@ const Right = ({conversationId, user, otherUser}) => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
-        let lastMessageRead;
+        let lastMessageRead = conversation.items[conversationIndex]
+            .messages?.filter(message => message.users.id === user.id && message.status === false).pop();
+        console.log(lastMessageRead)
 
         while (i < messageCount) {
 
@@ -85,10 +87,12 @@ const Right = ({conversationId, user, otherUser}) => {
                 if (nextBySameAuthor && nextDuration.as('hours') < 1) {
                     viewDate = false;
                 }
+                if (lastMessageRead.id === current.id) {
+                    viewDate = true;
+                }
             }
-
-            if (isMine && current.status === false) {
-                lastMessageRead = current
+            if (lastMessageRead.id === current.id) {
+                checkRead = true;
             }
 
             tempMessages.push(

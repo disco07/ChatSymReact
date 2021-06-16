@@ -24,7 +24,6 @@ const Input = ({conversationId, otherUser}) => {
                     "id": response.data.id,
                     // "images": response.data.images,
                     "users": response.data.users,
-                    "totalUnread": 1,
                 }, otherUser)
             })
         setContent('')

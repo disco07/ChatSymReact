@@ -4,22 +4,16 @@ import moment from "moment";
 import {NavLink} from "react-router-dom";
 import UserContext from "../../contexts/UserContext";
 
-const Conversation = ({conversation, totalUnread}) => {
-    const [unread, setUnread] = useState(conversation.conv.totalUnread)
+const Conversation = ({conversation}) => {
     const {user} = useContext(UserContext)
     const unreadColor = (unread) => {
         return unread < 5 ? "bg-yellow" : unread < 10 ? "bg-green" : "bg-pink"
     }
-    useEffect(() => {
-        if (parseInt(totalUnread) > 0) {
-            setUnread(totalUnread);
-        }
-    }, [totalUnread]);
 
     return (
         <>
             <NavLink to={"/conversation/" + conversation.conversationId + "/" + conversation.otherUserId}
-                     className={unread > 0 ?
+                     className={conversation.conv.totalUnread > 0 ?
                          "filterDiscussions all unread single" : "filterDiscussions all read single"}
                      id="list-chat-list" data-toggle="list" role="tab">
                 <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${conversation.avatar}`}
@@ -29,7 +23,7 @@ const Conversation = ({conversation, totalUnread}) => {
                     <i className="material-icons online">fiber_manual_record</i>
                 </div>
                 {
-                    unread > 0 && parseInt(conversation.conv.lastMessage.users.id) !== parseInt(user.id) &&
+                    conversation.conv.totalUnread > 0 && parseInt(conversation.conv.lastMessage.users.id) !== parseInt(user.id) &&
                     <div className={`new ${unreadColor(conversation.conv.totalUnread)}`}>
                         <span>+{conversation.conv.totalUnread}</span>
                     </div>
