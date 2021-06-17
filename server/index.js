@@ -30,9 +30,9 @@ io.on('connection', (socket) => {
     socket.on('join', ({ user }) => {
         const user1 = addUser({id: socket.id, idUser: user})
         socket.join(user);
-        users.map(user => {
-            if (user !== user1) {
-                io.to(user.idUser).emit('message', { user, connected : true});
+        users.map(u => {
+            if (u.idUser !== user) {
+                io.to(u.idUser).emit('message', { user, connected : true});
             }
         })
     })
@@ -58,9 +58,10 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         const user1 = removeUser(socket.id);
-        users.map(user => {
-            if (user !== user1) {
-                io.to(user.idUser).emit('message', {user1, connected: false});
+        console.log(user1)
+        users.map(u => {
+            if (u !== user1) {
+                io.to(u.idUser).emit('message', {user: user1.idUser, connected: false});
             }
         })
     })

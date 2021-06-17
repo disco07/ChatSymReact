@@ -65,8 +65,10 @@ const Right = ({conversationId, user, otherUser}) => {
         let i = 0;
         let messageCount = conversation.items[conversationIndex].messages?.length;
         let tempMessages = [];
-        let lastMessageRead = conversation.items[conversationIndex].messages?.length !== undefined && conversation.items[conversationIndex]
-            .messages?.filter(message => message.users.id === user.id && message.status === false).pop().id;
+        let lastMessageRead = conversation.items[conversationIndex].messages?.length !== undefined
+        && conversation.items[conversationIndex].messages?.length > 1 ? conversation.items[conversationIndex]
+                .messages?.filter(message => message.users.id === user.id && message.status === false).pop().id :
+            conversation.items[conversationIndex].messages?.filter(message => message.users.id === user.id && message.status === false)[0];
         while (i < messageCount) {
 
             let previous = conversation.items[conversationIndex].messages[i - 1];
@@ -102,7 +104,7 @@ const Right = ({conversationId, user, otherUser}) => {
             }
             if (lastMessageRead === current.id) {
                 checkRead = true;
-            }else if (messageReceived !== 0 && messageReceived === current.id) {
+            } else if (messageReceived !== 0 && messageReceived === current.id) {
                 checkRead = true;
             }
 
