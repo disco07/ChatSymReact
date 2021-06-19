@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Conversation from "./Conversation";
 import SocketContext from "../../contexts/SocketContext";
 import {addConversation, setLastMessage} from "../../redux/action";

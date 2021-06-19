@@ -186,7 +186,8 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
     const response_1 = await response.json();
     if (newConversation === false) {
         dispatch(setLastMessage(conversationId, response_1));
-        return dispatch(addMessage(conversationId, response_1));
+        dispatch(addMessage(conversationId, response_1));
+        return response_1;
     }
     dispatch(setLastMessage(conversationId, response_1));
     dispatch(addMessage(conversationId, response_1));
