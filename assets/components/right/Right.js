@@ -31,7 +31,9 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         let mounted = true;
         socket.on('newMessages', response => {
-            dispatch(addMessage(conversationId, response))
+            if (response.conversationId === conversationId) {
+                dispatch(addMessage(conversationId, response))
+            }
             if (mounted) {
                 patchMessagesUnread(response.id, false, localStorage.getItem('authToken'))
                     .then(response => {
@@ -68,7 +70,7 @@ const Right = ({conversationId, user, otherUser}) => {
         let lastMessageRead = conversation.items[conversationIndex].messages?.length !== undefined
         && conversation.items[conversationIndex].messages?.length > 1 ? conversation.items[conversationIndex]
                 .messages?.filter(message => message.users.id === user.id && message.status === false).pop().id :
-            conversation.items[conversationIndex].messages?.filter(message => message.users.id === user.id && message.status === false)[0];
+            conversation.items[conversationIndex].messages?.filter(message => message.users.id === user.id && message.status === false)[0].id;
         while (i < messageCount) {
 
             let previous = conversation.items[conversationIndex].messages[i - 1];
