@@ -2,13 +2,53 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=ImagesRepository::class)
+ * @ApiResource(
+ *     iri="http://schema.org/Images",
+ *     normalizationContext={
+ *         "groups"={"media_object_read"}
+ *     },
+ *     collectionOperations={
+ *         "post"={
+ *             "controller"=CreateMediaObjectAction::class,
+ *             "deserialize"=false,
+ *             "security"="is_granted('ROLE_USER')",
+ *             "validation_groups"={"Default", "media_object_create"},
+ *             "openapi_context"={
+ *                 "requestBody"={
+ *                     "content"={
+ *                         "multipart/form-data"={
+ *                             "schema"={
+ *                                 "type"="object",
+ *                                 "properties"={
+ *                                     "file"={
+ *                                         "type"="string",
+ *                                         "format"="binary"
+ *                                     }
+ *                                 }
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *         "get"
+ *     },
+ *     itemOperations={
+ *         "get"
+ *     }
+ * )
+ * @Vich\Uploadable
  */
 class Images
 {
@@ -16,11 +56,13 @@ class Images
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"read:message", "media_object_read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @ApiProperty(iri="http://schema.org/filename")
      */
     private $filename;
 
@@ -31,8 +73,23 @@ class Images
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull(groups={"media_object_create"})
+     * @Vich\UploadableField(mapping="images", fileNameProperty="filename")
      */
     private $imageFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Messages::class, inversedBy="images")
+     */
+    private $messages;
+
+    /**
+     * MediaObject constructor.
+     */
+    public function __construct()
+    {
+        $this->createdAt = new \DateTime('now');
+    }
 
     public function getId(): ?int
     {
@@ -71,6 +128,18 @@ class Images
     public function setImageFile(string $imageFile): self
     {
         $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    public function getMessages(): ?Messages
+    {
+        return $this->messages;
+    }
+
+    public function setMessages(?Messages $messages): self
+    {
+        $this->messages = $messages;
 
         return $this;
     }
