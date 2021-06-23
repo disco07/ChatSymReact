@@ -63,6 +63,7 @@ class Images
     /**
      * @ORM\Column(type="string", length=255)
      * @ApiProperty(iri="http://schema.org/filename")
+     * @Groups({"read:message", "media_object_read"})
      */
     private $filename;
 

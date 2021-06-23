@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\MessagesRepository;
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=MessagesRepository::class)
  * @ApiResource(
+ *     iri="http://schema.org/Message",
  *     normalizationContext={"groups"={"read:message"}},
  *     paginationItemsPerPage=10,
  *     attributes={"order"={"createdAt":"DESC"}},
@@ -82,6 +84,7 @@ class Messages
 
     /**
      * @ORM\OneToMany(targetEntity=Images::class, mappedBy="messages")
+     * @ApiProperty(iri="http://schema.org/image")
      * @Groups({"read:message"})
      */
     private $images;

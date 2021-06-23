@@ -16,7 +16,7 @@ const SideBar = ({user}) => {
                     <div className="inside">
                         <div className="nav nav-tab menu">
                             <button className="btn"><img className="avatar-xl" src={`${LOCALHOST}/assets/dist/img/avatars/${user.avatar}`}
-                                                         alt="avatar" /></button>
+                                                         alt="avatar" title={user.firstName} /></button>
                             <a href="#members" data-toggle="tab"><i className="material-icons">account_circle</i></a>
                             <a href="#discussions" data-toggle="tab" className="active"><i
                                 className="material-icons active">chat_bubble_outline</i></a>
