@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {useDispatch} from "react-redux";
-import {addConversation, postMessages} from "../../redux/action";
+import {postImages, postMessages} from "../../redux/action";
 import SocketContext from "../../contexts/SocketContext";
 
 const Input = ({conversationId, otherUser}) => {
@@ -29,28 +29,28 @@ const Input = ({conversationId, otherUser}) => {
         setContent('')
     }
     let lastUpdateTime
-    const sendTyping = ()=>{
+    const sendTyping = () => {
         lastUpdateTime = Date.now()
-        if(!isTyping){
+        if (!isTyping) {
             setIsTyping(true)
             startCheckingTyping()
         }
     }
 
     let typingInterval
-    const startCheckingTyping = ()=>{
+    const startCheckingTyping = () => {
         socket.emit('startTyping', otherUser, conversationId)
-        typingInterval = setInterval(()=>{
-            if((Date.now() - lastUpdateTime) > 2000){
+        typingInterval = setInterval(() => {
+            if ((Date.now() - lastUpdateTime) > 2000) {
                 setIsTyping(false)
                 stopCheckingTyping()
             }
         }, 2000)
     }
 
-    const stopCheckingTyping = ()=>{
+    const stopCheckingTyping = () => {
         socket.emit('stopTyping', otherUser, conversationId)
-        if(typingInterval){
+        if (typingInterval) {
             clearInterval(typingInterval)
         }
     }
@@ -62,7 +62,9 @@ const Input = ({conversationId, otherUser}) => {
                         <form className="position-relative w-100">
                             <textarea className="form-control" value={content}
                                       onChange={handleChange}
-                                      onKeyDown= { e => { e.keyCode !== 13 ? sendTyping() : handleSubmit(e) } }
+                                      onKeyDown={e => {
+                                          e.keyCode !== 13 ? sendTyping() : handleSubmit(e)
+                                      }}
                                       placeholder="Start typing for reply..."
                                       name="content"
                                       rows="1"/>
@@ -72,7 +74,21 @@ const Input = ({conversationId, otherUser}) => {
                                 className="material-icons">send</i></button>
                         </form>
                         <label>
-                            <input type="file"/>
+                            <input type="file" onChange={e => {
+                                dispatch(postImages(e.target.files[0])).then(response => {
+                                    dispatch(postMessages(conversationId, content, false, localStorage.getItem('authToken'), [response]))
+                                        .then(response => {
+                                            socket.emit('sendMessage', {
+                                                "conversationId": conversationId,
+                                                "content": response.content,
+                                                "createdAt": response.createdAt,
+                                                "id": response.id,
+                                                "images": response.images,
+                                                "user": response.user,
+                                            }, otherUser)
+                                        })
+                                })
+                            }}/>
                             <span className="btn attach d-sm-block d-none"><i
                                 className="material-icons">attach_file</i></span>
                         </label>

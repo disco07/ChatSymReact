@@ -46,7 +46,6 @@ const NewChat = () => {
                 }
             })
     }
-    console.log(userSelected)
     const handleSendMessage = (e) => {
         e.preventDefault();
         dispatch(postMessages(conversations?.id, content, true, localStorage.getItem('authToken')))

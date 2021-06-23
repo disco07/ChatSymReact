@@ -1,15 +1,16 @@
 import {
-    ADD_CONVERSATION,
+    ADD_CONVERSATION, ADD_IMAGES,
     ADD_MESSAGE,
     CONVERSATION_LOAD,
     GET_CONVERSATION,
-    GET_MESSAGE,
-    MESSAGE_LOAD, SET_LAST_MESSAGE, SET_MESSAGE_TO_READ,
+    GET_MESSAGE, LOAD_IMAGES,
+    MESSAGE_LOAD, REMOVE_IMAGES, SET_LAST_MESSAGE, SET_MESSAGE_TO_READ,
     USER_CONNECTED
 } from "./constants";
 
 const initialState = {
     login: "",
+    images: [],
     items: [],
     isLoading: false,
 }
@@ -89,6 +90,23 @@ const conversations = (state = initialState, action) => {
             conversation && (conversation.conv.totalUnread = 0);
             conversation?.messages?.map(message => message.id === action.messageId && (message.status = false))
             return state;
+        case LOAD_IMAGES:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        case ADD_IMAGES:
+            return {
+                ...state,
+                isLoading: false,
+                images: state.images.concat(action.image)
+            }
+        case REMOVE_IMAGES:
+            return {
+                ...state,
+                images: []
+            }
+
         default:
             return state;
     }

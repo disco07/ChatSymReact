@@ -1,12 +1,12 @@
 import {
-    ADD_CONVERSATION,
+    ADD_CONVERSATION, ADD_IMAGES,
     ADD_MESSAGE,
     CONVERSATION_ERROR,
     CONVERSATION_LOAD,
     GET_CONVERSATION,
-    GET_MESSAGE,
+    GET_MESSAGE, LOAD_IMAGES,
     MESSAGE_ERROR,
-    MESSAGE_LOAD,
+    MESSAGE_LOAD, REMOVE_IMAGES,
     SET_LAST_MESSAGE, SET_MESSAGE_TO_READ,
     USER_CONNECTED,
     USER_ERROR_CONNECTED
@@ -108,6 +108,24 @@ export const errorMessage = () => {
     }
 }
 
+export const loadImage = () => ({
+    type: LOAD_IMAGES,
+});
+
+export const addImage = (data) => {
+    return {
+        type: ADD_IMAGES,
+        image: data,
+    }
+}
+
+export const removeImage = () => {
+    return {
+        type: REMOVE_IMAGES,
+        image: null,
+    }
+}
+
 const bearer = (bearer_token) => 'Bearer ' + bearer_token;
 
 export const loginUser = (data) => async dispatch => {
@@ -172,7 +190,7 @@ export const fetchMessagesUnread = async (id, bearer_token) => {
     return await response.json();
 }
 
-export const postMessages = (conversationId, content, newConversation, bearer_token) => async dispatch => {
+export const postMessages = (conversationId, content, newConversation, bearer_token, images = []) => async dispatch => {
     const response = await fetch(LOCALHOST + '/api/newMessage?conversation=' + conversationId, {
         method: 'POST',
         headers: {
@@ -180,7 +198,8 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            content: content
+            content: content,
+            images: images.map(image => `/api/images/${image.id}`)
         })
     });
     const response_1 = await response.json();
@@ -192,6 +211,21 @@ export const postMessages = (conversationId, content, newConversation, bearer_to
     dispatch(setLastMessage(conversationId, response_1));
     dispatch(addMessage(conversationId, response_1));
     return response_1;
+}
+
+export const postImages = (files) => async dispatch => {
+    dispatch(loadImage())
+    const formData = new FormData();
+    formData.append('file', files)
+    return await fetch(LOCALHOST + '/api/images', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(response => {
+            dispatch(addImage(response));
+            return response;
+        });
 }
 
 export const fetchUsers = async (search) => {

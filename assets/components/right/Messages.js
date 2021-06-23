@@ -12,6 +12,7 @@ const Messages = ({data, isMine, viewDate, showTimestamp, checkRead}) => {
         nextWeek : 'dddd',
         sameElse : 'L'
     });
+    const extImage = ['jpg', 'GIF', 'PNG', 'JPEG'];
     return (
         <>
             {
@@ -29,6 +30,24 @@ const Messages = ({data, isMine, viewDate, showTimestamp, checkRead}) => {
                     <div className="text-main">
                         <div className="text-group">
                             <div className={isMine ? `text me` : `text`}>
+                                {
+                                    data.images?.map(image => {
+                                        const extension = image.filename.split('.').pop();
+                                        return extImage.includes(extension) ?
+                                            <img src={`${LOCALHOST}/assets/dist/img/avatars/${image.filename}`}
+                                                 alt="" width="300"/> :
+                                            (
+                                                <div className="attachment">
+                                                    <button className="btn attach"><i
+                                                        className="material-icons md-18">insert_drive_file</i>
+                                                    </button>
+                                                    <div className="file">
+                                                        <h5><a href={`${LOCALHOST}/assets/dist/img/avatars/${image.filename}`}>{image.filename}</a></h5>
+                                                    </div>
+                                                </div>
+                                            )
+                                    })
+                                }
                                 <p>{data.content}</p>
                             </div>
                         </div>
@@ -36,26 +55,6 @@ const Messages = ({data, isMine, viewDate, showTimestamp, checkRead}) => {
                     </div>
                 </div>
             }
-            {/*<div className={isMine ? `message me` : `message`}>*/}
-            {/*    <img className="avatar-md" src={`${LOCALHOST}/assets/dist/img/avatars/${data.users.avatar}`}*/}
-            {/*         data-toggle="tooltip" data-placement="top" title={data.users.firstName} alt="avatar" />*/}
-            {/*    <div className="text-main">*/}
-            {/*        <div className="text-group">*/}
-            {/*            <div className={isMine ? `text me` : `text`}>*/}
-            {/*                <div className="attachment">*/}
-            {/*                    <button className="btn attach"><i*/}
-            {/*                        className="material-icons md-18">insert_drive_file</i>*/}
-            {/*                    </button>*/}
-            {/*                    <div className="file">*/}
-            {/*                        <h5><a href="#">Tenacy Agreement.pdf</a></h5>*/}
-            {/*                        <span>24kb Document</span>*/}
-            {/*                    </div>*/}
-            {/*                </div>*/}
-            {/*            </div>*/}
-            {/*        </div>*/}
-            {/*        <span>{moment(data.createdAt).format('LT')}</span>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
         </>
     );
 };
