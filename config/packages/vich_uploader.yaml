@@ -3,7 +3,12 @@ vich_uploader:
 
     mappings:
         images:
+            uri_prefix: /assets/upload
+            upload_destination: '%kernel.project_dir%/public/assets/upload'
+            # Will rename uploaded files using a uniqueid as a prefix.
+            namer: Vich\UploaderBundle\Naming\OrignameNamer
+        avatar:
             uri_prefix: /assets/dist/img/avatars
             upload_destination: '%kernel.project_dir%/public/assets/dist/img/avatars'
             # Will rename uploaded files using a uniqueid as a prefix.
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
+            namer: Vich\UploaderBundle\Naming\OrignameNamer

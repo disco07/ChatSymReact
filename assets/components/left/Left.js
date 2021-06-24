@@ -50,8 +50,8 @@ const Left = ({conversations}) => {
                                     <div className="list-group" id="chats" role="tablist">
                                         {
                                             conversations.items
-                                                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                                                .map((conversation, index) => {
+                                                ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                                                ?.map((conversation, index) => {
                                                     if (conversation.conv.lastMessage !== null)
                                                         return <Conversation key={index} conversation={conversation}/>
                                             })

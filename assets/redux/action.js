@@ -160,6 +160,7 @@ export const fetchConversation = (bearer_token) => async dispatch => {
         return dispatch(errorConversation(response));
     }
     const response_1 = await response.json();
+    console.log(response_1)
     return dispatch(getConversation(response_1['hydra:member']));
 }
 

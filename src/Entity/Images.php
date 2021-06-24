@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
+use App\Controller\CreateMediaObjectAction;
+use phpDocumentor\Reflection\Types\Nullable;
+use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Repository\ImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -73,11 +77,17 @@ class Images
     private $createdAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @var File|Nullable
      * @Assert\NotNull(groups={"media_object_create"})
      * @Vich\UploadableField(mapping="images", fileNameProperty="filename")
      */
     private $imageFile;
+
+    /**
+     * @var string|null
+     * @Groups({"media_object_read"})
+     */
+    public $contentUrl;
 
     /**
      * @ORM\ManyToOne(targetEntity=Messages::class, inversedBy="images")
