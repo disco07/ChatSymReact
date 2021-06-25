@@ -22,7 +22,7 @@ const Input = ({conversationId, otherUser}) => {
                     "content": response.data.content,
                     "createdAt": response.data.createdAt,
                     "id": response.data.id,
-                    // "images": response.data.images,
+                    "images": response.data.images,
                     "users": response.data.users,
                 }, otherUser)
             })
