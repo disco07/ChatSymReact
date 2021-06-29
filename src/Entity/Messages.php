@@ -32,6 +32,29 @@ use Symfony\Component\Validator\Constraints as Assert;
  *              "path"="/messages_unread",
  *              "controller"=App\Controller\MessageUnreadController::class,
  *          },
+ *          "post_image"={
+ *             "controller"=CreateMediaObjectAction::class,
+ *             "deserialize"=false,
+ *             "security"="is_granted('ROLE_USER')",
+ *             "validation_groups"={"Default", "media_object_create"},
+ *             "openapi_context"={
+ *                 "requestBody"={
+ *                     "content"={
+ *                         "multipart/form-data"={
+ *                             "schema"={
+ *                                 "type"="object",
+ *                                 "properties"={
+ *                                     "file"={
+ *                                         "type"="string",
+ *                                         "format"="binary"
+ *                                     }
+ *                                 }
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }
+ *         },
  *          "get", "post"
  *     },
  *     denormalizationContext={"desable_type_enforcement"=true}
