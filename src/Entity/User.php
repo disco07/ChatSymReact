@@ -18,7 +18,32 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  * @ApiResource(
- *     normalizationContext={"groups"={"read:user"}}
+ *     normalizationContext={"groups"={"read:user"}},
+ *     collectionOperations={
+ *          "post_image"={
+ *             "controller"=CreateMediaObjectAction::class,
+ *             "deserialize"=false,
+ *             "security"="is_granted('ROLE_USER')",
+ *             "validation_groups"={"Default", "media_object_create"},
+ *             "openapi_context"={
+ *                 "requestBody"={
+ *                     "content"={
+ *                         "multipart/form-data"={
+ *                             "schema"={
+ *                                 "type"="object",
+ *                                 "properties"={
+ *                                     "file"={
+ *                                         "type"="string",
+ *                                         "format"="binary"
+ *                                     }
+ *                                 }
+ *                             }
+ *                         }
+ *                     }
+ *                 }
+ *             }
+ *         },
+ *     }
  * )
  * @ApiFilter(SearchFilter::class, properties={"firstName": "partial"})
  * @UniqueEntity("email", message="L'utilisateur existe déjà !")
