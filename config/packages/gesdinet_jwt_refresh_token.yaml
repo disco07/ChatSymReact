@@ -1,0 +1,2 @@
+gesdinet_jwt_refresh_token:
+  user_provider: security.user.provider.concrete.app_user_provider
