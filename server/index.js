@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendMessage', (data, userId) => {
+        console.log(data)
         io.to(parseInt(userId)).emit('newMessages', data);
     });
 
@@ -57,13 +58,13 @@ io.on('connection', (socket) => {
     })
 
     socket.on('disconnect', () => {
-        const user1 = removeUser(socket.id);
-        console.log(user1)
-        users.map(u => {
-            if (u !== user1) {
-                io.to(u.idUser).emit('message', {user: user1.idUser, connected: false});
-            }
-        })
+        const user = removeUser(socket.id);
+
+        if(user) {
+            console.log(user.name + ' déconnecté de la room ' + user);
+            io.to(user.room).emit('message_disconnect', { connected : false});
+            socket.broadcast.to(user.room).emit('message_disconnect', { connected : false});
+        }
     })
 })
 

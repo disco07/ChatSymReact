@@ -17,13 +17,13 @@ const Input = ({conversationId, otherUser}) => {
         dispatch(postMessages(conversationId, content, false, localStorage.getItem('authToken')))
             .then(response => {
                 socket.emit('sendMessage', {
-                    "conversationId": response.conversationId,
-                    "avatar": response.data.users.avatar,
-                    "content": response.data.content,
-                    "createdAt": response.data.createdAt,
-                    "id": response.data.id,
-                    "images": response.data.images,
-                    "users": response.data.users,
+                    "conversationId": conversationId,
+                    "avatar": response.users.avatar,
+                    "content": response.content,
+                    "createdAt": response.createdAt,
+                    "id": response.id,
+                    "images": response.images,
+                    "users": response.users,
                 }, otherUser)
             })
         setContent('')

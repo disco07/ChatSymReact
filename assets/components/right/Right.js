@@ -31,6 +31,7 @@ const Right = ({conversationId, user, otherUser}) => {
     useEffect(() => {
         let mounted = true;
         socket.on('newMessages', response => {
+            console.log(response)
             if (response.conversationId === conversationId) {
                 dispatch(addMessage(conversationId, response))
             }
