@@ -37,6 +37,10 @@ security:
             anonymous: true
             lazy: true
             provider: app_user_provider
+        json_login:
+            check_path: api_login
+            username_path: username
+            password_path: password
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
